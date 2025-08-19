@@ -4,6 +4,7 @@ const routes = [
   { path: "/", redirect: "/home" },
   { path: "/home", component: () => import("../pages/Home/Index.vue") },
   { path: "/market", component: () => import("../pages/Market/Index.vue") },
+  { path: "/info", component: () => import("../pages/Info/Index.vue") },
 ];
 
 const router = createRouter({

@@ -1,6 +1,8 @@
 <template>
-  <div id="software">
-    <h1>Software Name: {{ software }}</h1>
+  <div id="software" class="text-center">
+    <h1>
+      Software Name: <span class="capitalize">{{ software }}</span>
+    </h1>
     <nav>
       <RouterLink to="/">Go to Home</RouterLink>
       &nbsp;
@@ -15,5 +17,5 @@
 
 <script setup>
 import { reactive } from "vue";
-const software = reactive(window.SOFTWARE);
+const software = reactive(window.SOFTWARE) || "Center of worship";
 </script>

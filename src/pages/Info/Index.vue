@@ -1,1 +1,1 @@
-<template>Kingdom Info</template>
+<template><div>Info</div></template>

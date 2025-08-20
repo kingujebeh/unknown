@@ -64,63 +64,6 @@
                 App 1
               </p>
             </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-WwAlm0zTS3ODDzW4ZOKmfkhdJ4NnJxYz6pw1CadZcnSx7r9hQcszMQwoJEdLg37tZPXzVns2GUdH210Q_wRvivaaigecfnhxKkn6wNql52XXxy5n329XLQX9f_FA3EwtulU5AeRDb8sSHHAYKVFGaQwryhnMN0XK6rw0mbTv8BEdpM5nGMppXzKO3cScA6TesjIzaXN8SX_mQ27rrSwBwVKSDQZYlNJwv7MW7oCIkvRlYYIUXgdhk4PYv1rMEDQT7yWPuvuthvg');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                App 2
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuANIJkuITybqjdKkdiTw8yiEZVhZn6utbaV-3MPpn2X7bNQzHQh7_Q9U2l44_3HFSOtcXFXmgAqBBVwuRB22lUDLxZa1GiatcCe4DOx55mJIIGFIRosuNJ-DLi4axnvfiI_Ydl9cgoSSDuVA6E7-Z_9FyCBVtgX_ocl3jLSKnHgp--TO6kxD8VG5ESYbkzfqSzashqRF_n2VfJXcaew33gXMhD5Sm4IMh4m2T0za8HEjkl87BuJvuoDGsoQ6KSO7RjkY0UTJDXzh8o');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                App 3
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuBn3TwW4XR_i_3SGQGD4VMV1AAA17kTWuTgt--sK-FDPTQ2lnAUi7W0BnYrXhoQX0dRshb-iINI7jpDEQw4TbUo3CPxVnp7bQkAYwuu6qB94NKKH2UJw20ltTgg4JbDDDhrSHhY2Ss7Qz_gF-Q8cXp13ORcwuVaX2PDMe0NWONJMvz3AzQd8QSXa3LDfFdEulHhZZqkflvrEevYG8Bco6KdUsx9cTT6qyklMlhAqRofQ7WSmPbtgN6wepl43A31uXMHWnKWf3UWx6o');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                App 4
-              </p>
-            </div>
           </div>
           <h3
             class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
@@ -187,25 +130,6 @@
                 Kingdom 3
               </p>
             </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4rYYJsBZbrsmVmJ708dhcardTpfjcQoMfdhq1n5micFngPnWoVTTApKfw1ApehiHSGBSV3RBI7hH864B2s1HQz8OanTG3p1MRJLFHa456vmLHeyd2-ytwc8Cn3f0-VeknYgeBSZLSXvZkvMm-9YEFtPx7cr0f_Vy7K_sbqsDO4KkShZI4l7AYZLj38Su_qdNgQ6lM-gF6viiLW4WB68NBMNAW669iEdZjDNFE_7SnTQL1InhOFXr-saQbS6aa5i6nWxx3T-L5AQg');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Kingdom 4
-              </p>
-            </div>
           </div>
           <h3
             class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
@@ -232,63 +156,6 @@
                 class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
               >
                 Professional 1
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuAVfs2iHVidgWUwtDfMDlGpKQ9QkiyNTCLKT2eOOosd5S8TrgPyDB_v5Wd8rQum3RiOZrHTrYdUTFC7M_he8ZbNzPyfOR4JigQgodn39qQ3TuAxYzT75AdX5_E8P8OMS1_kT-TTtXq11VkJgRdj8ZkhRUqLqcUFiLBxil2cXs3kyThk61oHH6RWoVyE_CJSNXUTaJek0mNTmFQiwgkvt6wthMGuReQreyyv81Z1xBMsy1CmPpjFa31C7orUp-814AGbI4ngUUOCV20');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Professional 2
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcHXw7CccCtchJJ913_GkkVbFd3UC30ySAZA_NEU5b_Er7sdlM3IM1Cvk6kEjAeu21-gIwo1wOven9qnx84DhOcPFTEb5LgaAJVdEsEDDFV0_F2AFnzGWFENYK_68s3cQZ0Ec5Aj4AH8egKYfSoxLPC4uGA4nN71AIcrvYcHCUQnV0TcqU65IWSHtg0wwhb9Pfl8-xnPYpaEOa6Q39mQZdrO3Da53rhchgKeBeOeBpbZFFdlU1v1xipXHw0kNdEmUkGPAPZBNWTWk');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Professional 3
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuAh0oBlfc6m7G3JMd6pB4evQgw11d30kM4Mhdaq2_G_8srEAE3tyU4-wWsvzKqyJZNq_pyMEMqOUbucy758T8RvgM0eusBZ4pIRo9vTpEImXtjcKwTaeBaUwmtihKU4S3NsEdZ2dWgPBPOKBrVcD5KFWRIBq2ERE7kYsg-vlRWdD256uxxi8JOkpAQZUHAYyxnHYNbwo-NpV6cN7K2DE1T0qpeNJOtVrth8KrOvVQgdt0BVNshLKc8w7A_c2KQm1_W9wkudJevg-FA');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Professional 4
               </p>
             </div>
           </div>
@@ -319,62 +186,6 @@
                 Store 1
               </p>
             </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuACO-DgoBZm_rGcfv-7DwP75lyDe0FidL5hI4ZQ-IVpGKkTNn2_3PdxAm2AHtlaELbBvUfduVHnTKmLswTvpnb1fluI58a1TR1iGXQDUYr6lZNY-Xeg8maPTNJxps2MeiPqZa7evHsTEipAKTPQUV9bJlik3iIDOjJ-9Q6GHXK8Ib8Rm7T28I_12467olS1AxB0vA9G76cbx_eXpUY5ke6HzvNx6Nq9N4d7fjGl9PRyMK8QzYm8lDWEZPjDBWJX5bSep05ZIW0w8iU');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Store 2
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuAIVConBGvuEjzkNVn2B4vs8GyuajyCuOucCBott5pHcVttT1PWnK4CkE1TOJfabix891B7XFOCZCrw_IUCQj6rVFY6ULRKxQdjNnpQ1JPUD50tqL405ELJY9jtQZxsqSdA6gCjwHjwr7CrwNkualzag16fCsdKBRk4A6kYpySrVGvBosl75TU1GLWptJKFnqC8zOTjCNvN5YVj4j09YVfJrSp28gzTFNfPOkkWK5-_XUoI1LGRK_6DeasFTwK7XBat3OLIf1VguzQ');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Store 3
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuD2kaW2emv17MwMP1P9CkuCylMcTmFAUldvQTkpG_Wo1nFanQzC5vgwte6mi5VDOcyoT-uVRlBk9vDllbfJmJhUaz4C3NARfpLxptyuWUbOJ3V4-k-E0mKfRr-EU994AkNctU0SXEGRFlJa0-Ac1JQDdZSi78z-X-vjxf2S3ELTmj8U_ZqjHWSMJLZWdG0z2sZBh7yWHmAe7d8_TemhjxXfy1Bv-ktIxxtFJGi5uBGGLehMMjxw-QebER2h9lUkRmlI4xdbEFN5uQ8');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Store 4
-              </p>
             </div>
           </div>
           <h3
@@ -404,64 +215,6 @@
                 Shop 1
               </p>
             </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxlYFChZLG9xy-4ljoo-J36EE4oik9kRrYFJ3LxxkOsumQGsn46HcHYgWJldmeIvpS-GB4wmIOMBTOnZ3xhILk9u6PJjG4Jo39QTqTWlqmQNaydTW219fmNbOAunW9BfBwa_pTYXofmzktUgr3AebwAgSrsOYptyfo4Nk01osxcKnD6tbvqDo0UdTIbRsOmjMO3UWYA1VivOf54W2g1s38R8YYPx6gikICGDuNh2HOqrXv451JLgroAIJ6lPmRxcKxqg4wJK9j4iQ');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Shop 2
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuC6sG9E1S3XYFlFfpHNb6Z2xtaUx4_4wUJH4FOf0RGvmm9k8eO0wqNvfKY_KecVbOdjeNaMIUCe_Sxo6rPRQobMJmRnU7vWtgBP05OFhFFU7AE4ZYD_qT9XM4gS6r3JXTJ2Ko_U5b18r1lc-9EtfNnbafyUeFWy5Q02u0MPQs3Tqwdhq0bOM9TfrbrkjgVXqraQ__9MWvmzSLk1_V14q_hR7qW01qmeZOrhhDHLLiUl52jfpf0aHWEXOq3dMd2Je6Jk6y5nbpq8hQQ');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Shop 3
-              </p>
-            </div>
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuBIwGRPFLsCXec-P2FxTyw_R-lFtkOpawrRF44UX_-_8mHYB804wUIV6kXZ68LoF4YxAWYLKEOvsuPr4brjjBGPutvUTOFESIwOW3It2s3fnnhDUe29M7VwQk-o6wSB-gPKge8yRaITsyOqN73tBw5vf093bcN9hq3z5seeDtb16DBeQsWMYuDgJyB0LpcsBaLLcq9FFP1brVSwMemiMhDXC0yWbI0Ltfbnib6Vj2fuTuENHCng5SYYh7g2G11wCnMvN7vq3pRPlqg');
-              "
-            >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Shop 4
-              </p>
-            </div>
-          </div>
         </div>
         <div>
           <div

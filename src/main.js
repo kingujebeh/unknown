@@ -13,7 +13,7 @@ import { useStore } from "@/store";
 const pinia = createPinia();
 const app = createApp(App);
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   app.use(pinia);
 
   const store = useStore();
@@ -23,7 +23,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
     console.log(user);
   }
-
+  
   store.init();
 
   app.use(router);

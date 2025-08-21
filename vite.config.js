@@ -5,8 +5,6 @@ import { build, defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
-
-
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
   resolve: {
@@ -40,6 +38,10 @@ export async function buildAll() {
         alias: {
           "@": path.resolve(__dirname, "./src"),
         },
+      },
+      define: {
+        "import.meta.env.VITE_SOFTWARE": JSON.stringify(project.name),
+        "import.meta.env.VITE_API_URL": JSON.stringify(baseEnv.VITE_API_URL),
       },
       build: {
         outDir: project.outDir,

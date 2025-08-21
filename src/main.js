@@ -2,20 +2,30 @@ import "./assets/css/main.css";
 import { auth, onAuthStateChanged } from "./firebase";
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 
-import router from "./router";
+import router from "@/router";
 
-import App from "./App.vue";
+import App from "@/App.vue";
+
+import { useStore } from "@/store";
+
+const pinia = createPinia();
+const app = createApp(App);
 
 onAuthStateChanged(auth, (user) => {
+  app.use(pinia);
+
+  const store = useStore();
+
   if (user) {
     console.log(user);
   } else {
     console.log(user);
   }
+
+  store.init();
+
+  app.use(router);
+  app.mount("#app");
 });
-
-const app = createApp(App);
-
-app.use(router);
-app.mount("#app");

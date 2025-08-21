@@ -186,35 +186,35 @@
                 Store 1
               </p>
             </div>
-            </div>
           </div>
-          <h3
-            class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
-          >
-            Shops
-          </h3>
+        </div>
+        <h3
+          class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
+        >
+          Shops
+        </h3>
+        <div
+          class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
+        >
           <div
-            class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4"
+            class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
+            style="
+              background-image: linear-gradient(
+                  0deg,
+                  rgba(0, 0, 0, 0.4) 0%,
+                  rgba(0, 0, 0, 0) 100%,
+                  rgba(0, 0, 0, 0.1) 100%,
+                  rgba(0, 0, 0, 0) 100%
+                ),
+                url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXTjknOGltj8c2kEgoS_592N3HRds_YAfLFn9QSlJTog_MvvwoVQuou9Dh-O8w8-KKSxanOzyrltdKWB8xcjMi9fhM5mK_47XQT9Vz8AqZ5VknjFXCmx5PG9c6Dn1RzTbymzXxdowJC8LAP6L3cjeSc1z-3RBaroQN7FZ7J2xHD6PcvKa91kW-5dH3iu5Zobo7jkKCuwTNR5DmyDtJqXrPo3F8QGZTaG4pDNjIWWoeSHpgq2s2Y0obRSMBUuvDoH0ccxwATul-dYU');
+            "
           >
-            <div
-              class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-square"
-              style="
-                background-image: linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.4) 0%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0.1) 100%,
-                    rgba(0, 0, 0, 0) 100%
-                  ),
-                  url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXTjknOGltj8c2kEgoS_592N3HRds_YAfLFn9QSlJTog_MvvwoVQuou9Dh-O8w8-KKSxanOzyrltdKWB8xcjMi9fhM5mK_47XQT9Vz8AqZ5VknjFXCmx5PG9c6Dn1RzTbymzXxdowJC8LAP6L3cjeSc1z-3RBaroQN7FZ7J2xHD6PcvKa91kW-5dH3iu5Zobo7jkKCuwTNR5DmyDtJqXrPo3F8QGZTaG4pDNjIWWoeSHpgq2s2Y0obRSMBUuvDoH0ccxwATul-dYU');
-              "
+            <p
+              class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
             >
-              <p
-                class="text-white text-base font-bold leading-tight w-4/5 line-clamp-2"
-              >
-                Shop 1
-              </p>
-            </div>
+              Shop 1
+            </p>
+          </div>
         </div>
         <div>
           <div
@@ -313,6 +313,5 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-const software = reactive(window.SOFTWARE) || "Center of worship";
+const software = window.SOFTWARE || "~Name Of Software~";
 </script>

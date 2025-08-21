@@ -10,7 +10,7 @@
             <h2
               class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12 capitalize"
             >
-              {{ software }}
+              Minified {{ software }}
             </h2>
             <div class="flex w-12 items-center justify-end">
               <button

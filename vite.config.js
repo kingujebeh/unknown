@@ -41,7 +41,23 @@ export async function buildAll() {
       },
       define: {
         "import.meta.env.VITE_SOFTWARE": JSON.stringify(project.name),
-        "import.meta.env.VITE_API_URL": JSON.stringify(baseEnv.VITE_API_URL),
+        "import.meta.env.VITE_API_KEY": JSON.stringify(baseEnv.VITE_API_KEY),
+        "import.meta.env.VITE_AUTH_DOMAIN": JSON.stringify(
+          baseEnv.VITE_AUTH_DOMAIN
+        ),
+        "import.meta.env.VITE_PROJECT_ID": JSON.stringify(
+          baseEnv.VITE_PROJECT_ID
+        ),
+        "import.meta.env.VITE_STORAGE_BUCKET": JSON.stringify(
+          baseEnv.VITE_STORAGE_BUCKET
+        ),
+        "import.meta.env.VITE_MESSAGING_SENDER_ID": JSON.stringify(
+          baseEnv.VITE_MESSAGING_SENDER_ID
+        ),
+        "import.meta.env.VITE_APP_ID": JSON.stringify(baseEnv.VITE_APP_ID),
+        "import.meta.env.VITE_MEASUREMENT_ID": JSON.stringify(
+          baseEnv.VITE_MEASUREMENT_ID
+        ),
       },
       build: {
         outDir: project.outDir,

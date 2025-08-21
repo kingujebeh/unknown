@@ -1,10 +1,14 @@
+import { loadEnv } from "vite";
+
 import tailwindcss from "@tailwindcss/vite";
 import { build, defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
+
+
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -14,6 +18,8 @@ export default defineConfig({
 
 // Custom multi-build
 export async function buildAll() {
+  const baseEnv = loadEnv("production", process.cwd());
+
   const projects = [
     { name: "kingdom", outDir: "dist/kingdom" },
     { name: "business", outDir: "dist/business" },
@@ -29,7 +35,7 @@ export async function buildAll() {
     await build({
       root: process.cwd(), // 👈 ensures src/App.vue is the right one
       configFile: false, // avoid re-reading vite.config.js
-      plugins: [vue()],
+      plugins: [vue(), tailwindcss()],
       resolve: {
         alias: {
           "@": path.resolve(__dirname, "./src"),

@@ -1,12 +1,24 @@
 import { defineStore } from "pinia";
+import { reactive } from "vue";
 import api from "@/api";
 
 export const useStore = defineStore("unknown", () => {
+  const software = reactive({
+    type: "kingdom",
+  });
+
+  const info = reactive({});
+
   async function init() {
     console.info("App Initialized");
-    api.get("/data").then((res) => {
-      console.log(res.data);
-    });
+
+    try {
+      let { data } = await api.get("/data");
+      Object.assign(info, data);
+      console.log(info)
+    } catch (error) {
+      console.error(error);
+    }
   }
-  return { init };
+  return { init, software, info };
 });

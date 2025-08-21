@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as o,o as c}from"./index-CK6a1WgN.js";const n={},t={id:"signup"};function r(s,_){return c(),o("div",t," Sign Up Page")}const p=e(n,[["render",r]]);export{p as default};

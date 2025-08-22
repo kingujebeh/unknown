@@ -1,16 +1,12 @@
 <script setup>
 import { RouterView } from "vue-router";
+import { inject, ref } from "vue";
+
+const software = inject("software");
 </script>
 
 <template>
-  <div class="text-center max-h-screen">
-    <nav>
-      <RouterLink to="/home">Home</RouterLink>
-      &nbsp;
-      <RouterLink to="/signup">Sign Up</RouterLink>
-      &nbsp;
-      <RouterLink to="/info">Info</RouterLink>
-    </nav>
+  <div class="max-h-screen" :id="software.name">
     <RouterView></RouterView>
   </div>
 </template>

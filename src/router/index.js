@@ -12,12 +12,15 @@ const routes = [
     path: "/",
     redirect: "/home",
     component: () => import("../layouts/Screen.vue"),
+    children: [
+      {
+        path: "/home",
+        component: () => import(`@/interface/${project.name}/Index.vue`),
+      },
+
+      ...iroutes,
+    ],
   },
-  {
-    path: "/home",
-    component: () => import(`@/interface/${project.name}/Index.vue`),
-  },
-  ...iroutes,
 ];
 
 const router = createRouter({

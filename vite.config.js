@@ -34,7 +34,7 @@ export async function buildAll() {
         },
       },
       define: {
-        "import.meta.env.VITE_SOFTWARE": JSON.stringify(project.name),
+        "import.meta.env.VITE_INTERFACE": JSON.stringify(project.name),
         "import.meta.env.VITE_API_KEY": JSON.stringify(baseEnv.VITE_API_KEY),
         "import.meta.env.VITE_AUTH_DOMAIN": JSON.stringify(
           baseEnv.VITE_AUTH_DOMAIN

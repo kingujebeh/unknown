@@ -5,6 +5,7 @@ const project = data.projects.find(
   (project) => project.name == import.meta.env.VITE_INTERFACE
 );
 
+console.log(project);
 const iroutes = project.routes;
 
 const routes = [

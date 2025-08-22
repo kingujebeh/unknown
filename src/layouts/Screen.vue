@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView } from "vue-router";
-import { inject, ref } from "vue";
+import { inject } from "vue";
 
 const software = inject("software");
 </script>

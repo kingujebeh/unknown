@@ -5,7 +5,9 @@ import { build, defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
-import { projects } from "./data/index.js";
+import data from "./src/data/index.js";
+
+const projects = data.projects;
 
 export default defineConfig({
   plugins: [vue(), tailwindcss()],

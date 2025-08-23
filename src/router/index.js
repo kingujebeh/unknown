@@ -16,22 +16,9 @@ export default class RouterFactory {
     if (!routeImporter) {
       throw new Error(`No routes found for ${this.software}`);
     }
-    const { default: iroutes } = await routeImporter();
+    const { default: routes } = await routeImporter();
 
-    return [
-      {
-        path: "/",
-        redirect: "/home",
-        component: () => import("@/layouts/Screen.vue"),
-        children: [
-          {
-            path: "/home",
-            component: interfaceModules[`../interface/${this.software}/Index.vue`],
-          },
-          ...iroutes,
-        ],
-      },
-    ];
+    return routes;
   }
 
   async create() {

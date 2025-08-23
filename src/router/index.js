@@ -1,28 +1,41 @@
-import { createWebHistory, createRouter } from "vue-router";
+// src/router/RouterFactory.js
+import { createRouter, createWebHistory } from "vue-router";
 
-const software = import.meta.env.VITE_INTERFACE;
+export default class RouterFactory {
+  constructor(software) {
+    this.software = software;
+  }
 
-// ✅ this will only ever import ONE file (not glob all)
-const { default: iroutes } = await import(`@/router/routes/${software}.js`);
+  async loadRoutes() {
+    // dynamically import only the matching routes file
+    const { default: iroutes } = await import(
+      /* @vite-ignore */ `./routes/${this.software}.js`
+    );
 
-const routes = [
-  {
-    path: "/",
-    redirect: "/home",
-    component: () => import("@/layouts/Screen.vue"),
-    children: [
+    return [
       {
-        path: "/home",
-        component: () => import(`@/interface/${software}/Index.vue`),
+        path: "/",
+        redirect: "/home",
+        component: () => import("../layouts/Screen.vue"),
+        children: [
+          {
+            path: "/home",
+            component: () =>
+              import(
+                /* @vite-ignore */ `../interface/${this.software}/Index.vue`
+              ),
+          },
+          ...iroutes,
+        ],
       },
-      ...iroutes,
-    ],
-  },
-];
+    ];
+  }
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-export default router;
+  async create() {
+    const routes = await this.loadRoutes();
+    return createRouter({
+      history: createWebHistory(),
+      routes,
+    });
+  }
+}

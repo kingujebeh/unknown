@@ -1,11 +1,10 @@
 import "./assets/css/main.css";
 import { auth, onAuthStateChanged } from "./firebase";
 
-
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
-import router from "@/router";
+import Router from "@/router";
 
 import App from "@/App.vue";
 
@@ -13,8 +12,6 @@ import { useStore } from "@/store";
 
 const pinia = createPinia();
 const app = createApp(App);
-
-
 
 onAuthStateChanged(auth, async (user) => {
   app.use(pinia);
@@ -33,6 +30,14 @@ onAuthStateChanged(auth, async (user) => {
     name: import.meta.env.VITE_INTERFACE,
   });
 
-  app.use(router);
-  app.mount("#app");
+
+  const software = import.meta.env.VITE_INTERFACE;
+
+  (async () => {
+    const factory = new Router(software);
+    const router = await factory.create();
+
+    app.use(router);
+    app.mount("#app");
+  })();
 });

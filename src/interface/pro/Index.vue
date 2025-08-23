@@ -33,5 +33,5 @@
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-setTimeout(() => router.push("/about"), 1500);
+setTimeout(() => router.push("/about"), 3000);
 </script>

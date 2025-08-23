@@ -5,9 +5,15 @@ import { build, defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
-import data from "./src/data/index.js";
-
-const projects = data.projects;
+const softwares = [
+  "kingdom",
+  "community",
+  "business",
+  "store",
+  "shop",
+  "pro",
+  "me",
+];
 
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
@@ -22,8 +28,8 @@ export default defineConfig({
 export async function buildAll() {
   const baseEnv = loadEnv("production", process.cwd());
 
-  for (const project of projects) {
-    console.log(`\n🚀 Building ${project.name}...`);
+  for (const software of softwares) {
+    console.log(`\n🚀 Building ${software}...`);
     await build({
       root: process.cwd(), // 👈 ensures src/App.vue is the right one
       configFile: false, // avoid re-reading vite.config.js
@@ -34,7 +40,7 @@ export async function buildAll() {
         },
       },
       define: {
-        "import.meta.env.VITE_INTERFACE": JSON.stringify(project.name),
+        "import.meta.env.VITE_INTERFACE": JSON.stringify(software),
         "import.meta.env.VITE_API_KEY": JSON.stringify(baseEnv.VITE_API_KEY),
         "import.meta.env.VITE_AUTH_DOMAIN": JSON.stringify(
           baseEnv.VITE_AUTH_DOMAIN
@@ -54,7 +60,7 @@ export async function buildAll() {
         ),
       },
       build: {
-        outDir: project.outDir,
+        outDir: `dist/${software}`,
         emptyOutDir: true,
       },
     });

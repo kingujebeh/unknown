@@ -1,7 +1,6 @@
 import "./assets/css/main.css";
 import { auth, onAuthStateChanged } from "./firebase";
 
-import data from "@/data";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -15,9 +14,6 @@ import { useStore } from "@/store";
 const pinia = createPinia();
 const app = createApp(App);
 
-const project = data.projects.find(
-  (project) => project.name === import.meta.env.VITE_INTERFACE
-);
 
 
 onAuthStateChanged(auth, async (user) => {
@@ -34,7 +30,7 @@ onAuthStateChanged(auth, async (user) => {
   store.init();
 
   app.provide("software", {
-    name: project.name,
+    name: import.meta.env.VITE_INTERFACE,
   });
 
   app.use(router);

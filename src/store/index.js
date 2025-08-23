@@ -2,15 +2,9 @@ import { defineStore } from "pinia";
 import { reactive } from "vue";
 import api from "@/api";
 
-import data from "@/data";
-
-const project = data.projects.find(
-  (project) => project.name === import.meta.env.VITE_INTERFACE
-);
-
 export const useStore = defineStore("unknown", () => {
   const software = reactive({
-    name: project.name,
+    name: import.meta.env.VITE_INTERFACE,
   });
 
   const info = reactive({});

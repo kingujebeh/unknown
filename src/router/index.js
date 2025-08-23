@@ -1,12 +1,16 @@
 import { createWebHistory, createRouter } from "vue-router";
-import data from "@/data";
 
-const project = data.projects.find(
-  (project) => project.name == import.meta.env.VITE_INTERFACE
-);
+const software = import.meta.env.VITE_INTERFACE;
 
-console.log(project);
-const iroutes = project.routes;
+// grab all routes files
+const routeModules = import.meta.glob("@/router/routes/*.js", { eager: true });
+
+console.log(routeModules);
+console.log("software:", software);
+
+
+// pick the correct one
+const iroutes = routeModules[`/src/router/routes/${software}.js`].default;
 
 const routes = [
   {
@@ -16,9 +20,8 @@ const routes = [
     children: [
       {
         path: "/home",
-        component: () => import(`@/interface/${project.name}/Index.vue`),
+        component: () => import(`@/interface/${software}/Index.vue`),
       },
-
       ...iroutes,
     ],
   },

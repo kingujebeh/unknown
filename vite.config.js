@@ -15,6 +15,20 @@ const softwares = [
   "me",
 ];
 
+// vite.config.js
+function InterfaceReplacePlugin(software) {
+  return {
+    name: "replace-interface",
+    enforce: "pre",
+    transform(code, id) {
+      if (id.includes("src/router/index.js")) {
+        return code.replace(/__INTERFACE__/g, software);
+      }
+      return code;
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
   resolve: {
@@ -33,7 +47,7 @@ export async function buildAll() {
     await build({
       root: process.cwd(), // 👈 ensures src/App.vue is the right one
       configFile: false, // avoid re-reading vite.config.js
-      plugins: [vue(), tailwindcss()],
+      plugins: [InterfaceReplacePlugin(software), vue(), tailwindcss()],
       resolve: {
         alias: {
           "@": path.resolve(__dirname, "./src"),

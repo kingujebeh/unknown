@@ -17,12 +17,12 @@
       <h1
         class="text-white tracking-light text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6"
       >
-        Ethan Carter
+        Creatyve 3D
       </h1>
       <p
         class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4 text-center"
       >
-        Product Designer
+        3D Design Modeller 
       </p>
     </div>
     <div><div class="h-5 bg-[#111418]"></div></div>

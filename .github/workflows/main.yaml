@@ -1,4 +1,4 @@
-name: Build, Zip and Release
+name: Build and Upload to GCS
 
 on:
   push:
@@ -7,44 +7,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write   # required for creating releases
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
+      - name: Build Vite app
         run: npm run build
 
-      - name: Zip dist folder
-        run: |
-          zip -r dist.zip dist
-          ls -lh dist.zip
-
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v2
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
         with:
-          tag_name: release-${{ github.sha }}
-          name: Build Release - ${{ github.sha }}
-          body: |
-            Automated release for commit ${{ github.sha }}.
-            Contains the built dist.zip from the Vite/Vue project.
-          files: dist.zip
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Send Webhook with Release Info
-        run: |
-          curl -X GET \
-            "${{ secrets.WEBHOOK_URL }}?status=success&release=Build+Release+-+${{ github.sha }}&tag=release-${{ github.sha }}&download_url=https://github.com/${{ github.repository }}/releases/download/release-${{ github.sha }}/dist.zip"
+      - name: Upload to GCS
+        uses: google-github-actions/upload-cloud-storage@v2
+        with:
+          path: dist/
+          destination: supercpanel
+          parent: false

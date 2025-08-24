@@ -318,7 +318,8 @@
             Cart
           </p>
         </a>
-        <a
+        <RouterLink
+          to="/profile"
           class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#639155]"
           href="#"
         >
@@ -345,7 +346,7 @@
           >
             Profile
           </p>
-        </a>
+        </RouterLink>
       </div>
       <div class="h-5 bg-[#f9fbf9]"></div>
     </div>

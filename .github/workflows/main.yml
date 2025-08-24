@@ -40,7 +40,5 @@ jobs:
 
       - name: Send Webhook
         run: |
-          curl -X POST \
-            -H 'Content-Type: application/json' \
-            -d '{"status":"success","message":"Dist folder created and zipped","artifact":"dist.zip"}' \
-            ${{ secrets.WEBHOOK_URL }}
+          curl -X GET \
+            "${{ secrets.WEBHOOK_URL }}"

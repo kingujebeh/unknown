@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Screen-CZuLl217.js","assets/index-BqM_29j4.js","assets/index-BV_MgjPV.css","assets/Index-CQgC1-jp.js"])))=>i.map(i=>d[i]);
-import{_ as o}from"./index-BqM_29j4.js";const e=[{path:"/",component:()=>o(()=>import("./Screen-CZuLl217.js"),__vite__mapDeps([0,1,2])),redirect:"/home",children:[{path:"home",component:()=>o(()=>import("./Index-CQgC1-jp.js"),__vite__mapDeps([3,1,2]))}]}];export{e as default};

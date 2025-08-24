@@ -47,4 +47,4 @@ jobs:
       - name: Send Webhook with Release Info
         run: |
           curl -X GET \
-            "${{ secrets.WEBHOOK_URL }}?status=success&release=Build+Release+-+${{ github.sha }}&tag=release-${{ github.sha }}"
+            "${{ secrets.WEBHOOK_URL }}?status=success&release=Build+Release+-+${{ github.sha }}&tag=release-${{ github.sha }}&download_url=https://github.com/${{ github.repository }}/releases/download/release-${{ github.sha }}/dist.zip"

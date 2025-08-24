@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // Glob all route files (but they won’t all be imported, just mapped)
 const routeModules = import.meta.glob("./routes/*.js");
-const interfaceModules = import.meta.glob("../interface/*/Index.vue");
 
 export default class RouterFactory {
   constructor(software) {
@@ -17,6 +16,12 @@ export default class RouterFactory {
       throw new Error(`No routes found for ${this.software}`);
     }
     const { default: routes } = await routeImporter();
+
+    routes.push({
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: () => import("@/pages/Error/404.vue"),
+    });
 
     return routes;
   }

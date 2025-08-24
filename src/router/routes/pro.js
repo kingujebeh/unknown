@@ -5,7 +5,11 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("@/interface/pro/Index.vue"),
+        component: () => import("@/interface/pro/Splash.vue"),
+      },
+      {
+        path: "projects",
+        component: () => import("@/interface/pro/Projects.vue"),
       },
       {
         path: "about",

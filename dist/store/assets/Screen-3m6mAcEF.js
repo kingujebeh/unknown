@@ -1,0 +1,1 @@
+import{i as s,c as t,o as c,a as o,u as e,R as r}from"./index-DOf1Wfq9.js";const n=["id"],d={__name:"Screen",setup(_){const a=s("software");return(i,m)=>(c(),t("div",{class:"max-h-screen",id:e(a).name},[o(e(r))],8,n))}};export{d as default};

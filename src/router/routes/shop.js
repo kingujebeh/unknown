@@ -1,16 +1,18 @@
 const routes = [
-    {
-      path: "/",
-      component: () => import("@/layouts/Screen.vue"),
-      redirect: "/home",
-      children: [
-        {
-          path: "home",
-          component: () => import("@/interface/shop/Index.vue"),
-        },
-      ],
-    },
-  ];
-  
-  export default routes;
-  
+  {
+    path: "/",
+    component: () => import("@/layouts/Screen.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("@/interface/shop/Splash.vue"),
+      },
+      {
+        path: "home",
+        component: () => import("@/interface/shop/Home.vue"),
+      },
+    ],
+  },
+];
+
+export default routes;

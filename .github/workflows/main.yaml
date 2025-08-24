@@ -1,4 +1,4 @@
-name: Build, Zip and Notify
+name: Build, Zip and Release
 
 on:
   push:
@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # required for creating releases
 
     steps:
       - name: Checkout repository
@@ -26,21 +28,23 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Confirm dist folder exists
-        run: ls -la dist
-
       - name: Zip dist folder
         run: |
           zip -r dist.zip dist
           ls -lh dist.zip
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
         with:
-          name: dist-zip
-          path: dist.zip
+          tag_name: release-${{ github.sha }}
+          name: Build Release - ${{ github.sha }}
+          body: |
+            Automated release for commit ${{ github.sha }}.
+            Contains the built dist.zip from the Vite/Vue project.
+          files: dist.zip
 
-      - name: Send Webhook
+      - name: Send Webhook with Release Info
         run: |
           curl -X GET \
-            "${{ secrets.WEBHOOK_URL }}"
+            "${{ secrets.WEBHOOK_URL }}?status=success&release=Build+Release+-+${{ github.sha }}&tag=release-${{ github.sha }}"

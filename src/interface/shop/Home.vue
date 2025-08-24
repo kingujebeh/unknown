@@ -327,8 +327,8 @@
             </div>
           </div>
           <p class="text-[#111518] text-base font-normal leading-normal">
-            Osas Engineering saved the day! My refrigerator broke down, and
-            they were able to fix it quickly and affordably. Highly recommend!
+            Osas Engineering saved the day! My refrigerator broke down, and they
+            were able to fix it quickly and affordably. Highly recommend!
           </p>
           <div class="flex gap-9 text-[#60778a]">
             <button class="flex items-center gap-2">
@@ -693,7 +693,8 @@
             Services
           </p>
         </a>
-        <a
+        <RouterLink
+          to="/profile"
           class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#60778a]"
           href="#"
         >
@@ -720,7 +721,7 @@
           >
             Profile
           </p>
-        </a>
+        </RouterLink>
       </div>
       <div class="h-5 bg-white"></div>
     </div>

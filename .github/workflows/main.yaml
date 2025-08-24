@@ -26,11 +26,13 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Confirm dist folder exists
+        run: ls -la dist
+
       - name: Zip dist folder
         run: |
-          cd dist
-          zip -r ../dist.zip .
-          cd ..
+          zip -r dist.zip dist
+          ls -lh dist.zip
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

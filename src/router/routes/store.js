@@ -2,11 +2,14 @@ const routes = [
   {
     path: "/",
     component: () => import("@/layouts/Screen.vue"),
-    redirect: "/home",
     children: [
       {
+        path: "",
+        component: () => import("@/interface/store/Splash.vue"),
+      },
+      {
         path: "home",
-        component: () => import("@/interface/store/Index.vue"),
+        component: () => import("@/interface/store/Home.vue"),
       },
     ],
   },

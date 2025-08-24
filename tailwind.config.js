@@ -6,6 +6,8 @@ export default {
       fontFamily: {
         sans: ["Noto Sans", "sans-serif"],
         jakarta: ["Plus Jakarta Sans", "sans-serif"],
+        grotesk: ['"Space Grotesk"', "sans-serif"],
+        public: ['"Public Sans"', "sans-serif"],
       },
     },
   },

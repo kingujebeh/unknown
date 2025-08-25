@@ -1,9 +1,10 @@
 <template>
   <div class="flex items-center justify-center min-h-screen">
     <div class="text-center text-lg">
-      Sign Up: Create an Unknown Account
+      Sign in to continue on Creatyve3D
+
       <br />
-      Enter your name
+      <RouterLink to="signup"> Create Account</RouterLink>
     </div>
   </div>
 </template>

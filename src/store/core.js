@@ -6,7 +6,7 @@ async function follow(router) {
 
   const uid = store.user.uid;
   if (!uid) {
-    router.push("/auth/signup");
+    router.push("/auth/signin");
   } else {
     const { data } = api.get(`/follow/${uid}`);
     if (data) store.user.isFollowing = true;

@@ -10,6 +10,8 @@ import App from "@/App.vue";
 
 import { useStore } from "@/store";
 
+import { Icon } from '@iconify/vue'
+
 
 
 const pinia = createPinia();
@@ -31,6 +33,8 @@ onAuthStateChanged(auth, async (user) => {
   app.provide("software", {
     name: import.meta.env.VITE_INTERFACE,
   });
+
+  app.component('Icon', Icon)
 
 
   const software = import.meta.env.VITE_INTERFACE;

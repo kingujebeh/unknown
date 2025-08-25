@@ -28,7 +28,7 @@
             role="tab"
             :aria-selected="$route.name === tab.name"
           >
-            <Icon
+          <Icon
               :icon="
                 $route.name === tab.name ? tab.icon.active : tab.icon.inactive
               "
@@ -49,7 +49,6 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "@/store";
-import { Icon } from "@iconify/vue";
 
 const store = useStore();
 const route = useRoute();

@@ -13,7 +13,7 @@
 <script setup>
 import { useStore } from "@/store";
 import { RouterView } from "vue-router";
-import { inject, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import BottomNavigation from "@/components/ui/Navigation/Bottom.vue";
 
 const store = useStore();

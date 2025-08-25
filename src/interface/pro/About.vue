@@ -10,19 +10,7 @@
           data-icon="ArrowLeft"
           data-size="24px"
           data-weight="regular"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24px"
-            height="24px"
-            fill="currentColor"
-            viewBox="0 0 256 256"
-          >
-            <path
-              d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"
-            ></path>
-          </svg>
-        </div>
+        ></div>
         <h2
           class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center"
         >
@@ -32,24 +20,7 @@
           <button
             class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
           >
-            <div
-              class="text-white"
-              data-icon="Share"
-              data-size="24px"
-              data-weight="regular"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24px"
-                height="24px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  d="M229.66,109.66l-48,48a8,8,0,0,1-11.32-11.32L204.69,112H165a88,88,0,0,0-85.23,66,8,8,0,0,1-15.5-4A103.94,103.94,0,0,1,165,96h39.71L170.34,61.66a8,8,0,0,1,11.32-11.32l48,48A8,8,0,0,1,229.66,109.66ZM192,208H40V88a8,8,0,0,0-16,0V208a16,16,0,0,0,16,16H192a8,8,0,0,0,0-16Z"
-                ></path>
-              </svg>
-            </div>
+            <Icon icon="material-symbols-light:share" class="w-6 h-6" />
           </button>
         </div>
       </div>
@@ -59,40 +30,70 @@
             <div
               class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
               style="
-                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUcoY7Dot9-9AlGv3CuBairFXa936w67rvyJRHvi99xDtU0t0JIZw967x2IRFKwmzriXrO6Off8_UkhRe7YjE16HLDNbsjOCBHUw7J7_N8gl_s0jUyP1i0N1xWvJrD0v6WTn14qZzyYlGU7A7mvJBLL_wGAh3AdNPGzD8I0zDZl69V8XRWHdhItOxGkHETEsP1Q9mIqVe6fJ5Aap4VNG0Z5uZCipwYV-ifnmEh16nq-lS7Nu832KhiNNKycWUuN9_qjWZImMUT9I2w');
+                background-image: url('https://fiverr-res.cloudinary.com/image/upload/f_auto,q_auto,t_profile_original/v1/attachments/profile/photo/0c0290fa2fdcfaec0fd3c61ddef14bae-1723635067108/5e6822e0-fa3a-4787-93f1-fece4f1a2fd1.jpg');
               "
             ></div>
             <div
-              class="flex flex-col items-center justify-center justify-center"
+              class="flex flex-col items-center justify-center justify-center gap-2"
             >
               <p
                 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] text-center"
               >
-                Creative 3D
+                Creatyve3D Inc
               </p>
               <p
                 class="text-[#9cabba] text-base font-normal leading-normal text-center"
               >
-                Product Designer
+                Lead Consultant
               </p>
-              <p
-                class="text-[#9cabba] text-base font-normal leading-normal text-center"
+              <div
+                class="flex items-center gap-2 text-[#9cabba] text-base font-normal leading-normal justify-center"
               >
-                ethancarter.pro · 123 followers
-              </p>
+                <p>@creatyve3d · 285 followers</p>
+                <div class="flex gap-0.5">
+                  <!-- Full stars -->
+                  <Icon
+                    icon="material-symbols:star"
+                    class="w-5 h-5 text-white"
+                  />
+                  <Icon
+                    icon="material-symbols:star"
+                    class="w-5 h-5 text-white"
+                  />
+                  <Icon
+                    icon="material-symbols:star"
+                    class="w-5 h-5 text-white"
+                  />
+                  <Icon
+                    icon="material-symbols:star"
+                    class="w-5 h-5 text-white"
+                  />
+                  <!-- Half star -->
+                  <Icon
+                    icon="material-symbols:star-half"
+                    class="w-5 h-5 text-white"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <button
             class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#283039] text-white text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px] @[480px]:w-auto"
+            @click="follow()"
           >
-            <span class="truncate">Follow</span>
+            <span v-if="!store.user.isFollowing" class="truncate">Follow</span>
+            <span v-else class="truncate">Followed</span>
           </button>
         </div>
       </div>
       <p class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
-        I'm a product designer with a passion for creating intuitive and
-        impactful digital experiences. My work focuses on user-centered design,
-        blending aesthetics with functionality to solve real-world problems.
+        I am a 3D generalist and lead consultant with Creatyve3D Inc of Creatyve
+        Graphyx, Nigeria. We have the proper tools, experience, and fortitude to
+        get all your ideas perfected, from thought to product.
+      </p>
+      <p class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
+        Allow us to take the stress off you, and handle that project for you and
+        I'm sure you'd be glad you delegated it to us.
       </p>
       <h3
         class="text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
@@ -104,42 +105,91 @@
           class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
         >
           <p class="text-white text-sm font-medium leading-normal">
-            UI/UX Design
+            3D modeler
           </p>
         </div>
         <div
           class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
         >
           <p class="text-white text-sm font-medium leading-normal">
-            Interaction Design
+            3D Rendering Expert
           </p>
         </div>
         <div
           class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
         >
           <p class="text-white text-sm font-medium leading-normal">
-            User Research
+            Autodesk Maya Expert
           </p>
         </div>
         <div
           class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
         >
           <p class="text-white text-sm font-medium leading-normal">
-            Prototyping
+            Cinema 4D Expert
           </p>
         </div>
         <div
           class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
         >
           <p class="text-white text-sm font-medium leading-normal">
-            Visual Design
+            Blender Expert
           </p>
         </div>
         <div
           class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
         >
           <p class="text-white text-sm font-medium leading-normal">
-            Design Systems
+            Adobe Photoshop Expert
+          </p>
+        </div>
+        <div
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+        >
+          <p class="text-white text-sm font-medium leading-normal">
+            Adobe Illustrator Expert
+          </p>
+        </div>
+        <div
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+        >
+          <p class="text-white text-sm font-medium leading-normal">
+            Graphic Designer
+          </p>
+        </div>
+        <div
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+        >
+          <p class="text-white text-sm font-medium leading-normal">
+            Marvelous Designer Expert
+          </p>
+        </div>
+        <div
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+        >
+          <p class="text-white text-sm font-medium leading-normal">
+            3D Sculpting Artist
+          </p>
+        </div>
+        <div
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+        >
+          <p class="text-white text-sm font-medium leading-normal">
+            ZBrush Expert
+          </p>
+        </div>
+        <div
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+        >
+          <p class="text-white text-sm font-medium leading-normal">
+            Rhinoceros 3D Expert
+          </p>
+        </div>
+        <div
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+        >
+          <p class="text-white text-sm font-medium leading-normal">
+            SketchUp Expert
           </p>
         </div>
       </div>
@@ -521,3 +571,14 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { useStore } from "@/store";
+import { useRouter } from "vue-router";
+
+const store = useStore();
+const router = useRouter();
+function follow() {
+  store.follow(router);
+}
+</script>

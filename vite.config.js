@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 
 // vite.config.js
 import { loadEnv } from "vite";
@@ -6,7 +7,6 @@ import { loadEnv } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import { build, defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import path from "path";
 
 const softwares = [
   "kingdom",
@@ -17,6 +17,37 @@ const softwares = [
   "pro",
   "me",
 ];
+
+// function copyServiceWorker(software) {
+//   const src = path.resolve(__dirname, "src/service/sw.js");
+//   const dest = path.resolve(__dirname, `dist/${software}/sw.js`);
+
+//   fs.copyFileSync(src, dest);
+// }
+
+function createServiceWorker(software) {
+  const manifestPath = `dist/${software}/manifest.json`;
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+
+  // Collect all built files
+  const assets = Object.values(manifest).flatMap((entry) => {
+    const files = [];
+    if (entry.file) files.push("/" + entry.file);
+    if (entry.css) files.push(...entry.css.map((f) => "/" + f));
+    return files;
+  });
+
+  // Read sw template from src/service/sw.js
+  const swTemplatePath = path.resolve(__dirname, "src/service/sw.js");
+  const swTemplate = fs.readFileSync(swTemplatePath, "utf-8");
+
+  const swFinal = swTemplate.replace(
+    "__ASSETS__",
+    JSON.stringify(assets, null, 2)
+  );
+
+  fs.writeFileSync(`dist/${software}/sw.js`, swFinal);
+}
 
 // Plugin to replace __INTERFACE__ in router
 function InterfaceReplacePlugin(software) {
@@ -114,6 +145,8 @@ export async function buildAll() {
       });
       console.log(`✅ Finished building ${software}`);
       createWebManifest(software); // ✅ add PWA manifest
+
+      createServiceWorker(software); // inject assets into sw.js
     } catch (err) {
       console.error(`❌ Build failed for ${software}:`, err);
     }

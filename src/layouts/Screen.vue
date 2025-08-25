@@ -1,19 +1,22 @@
 <template>
-  <div class="max-h-screen flex flex-col" :id="software.name">
+  <div class="flex flex-col min-h-screen" :id="software.name">
+    <!-- Main content with dynamic bottom padding -->
     <div
-      class="flex-1"
+      class="flex-1 overflow-auto"
       :style="{ paddingBottom: navHeight, fontFamily: fonts }"
+      ref="mainContent"
     >
-      <router-view></router-view>
+      <router-view />
     </div>
-    <bottom-navigation></bottom-navigation>
+
+    <!-- Fixed Bottom Nav -->
+    <bottom-navigation ref="bottomNav" />
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useStore } from "@/store";
-import { RouterView } from "vue-router";
-import { ref, onMounted } from "vue";
 import BottomNavigation from "@/components/ui/Navigation/Bottom.vue";
 
 const store = useStore();
@@ -21,11 +24,22 @@ const software = store.software.name;
 const fonts = store.software.fonts;
 
 const navHeight = ref("0px");
+const bottomNav = ref(null);
 
-onMounted(() => {
-  const navEl = document.querySelector("nav[role='tablist']");
-  if (navEl) {
-    navHeight.value = navEl.offsetHeight + "px";
+function updateNavHeight() {
+  if (bottomNav.value?.$el) {
+    navHeight.value = bottomNav.value.$el.offsetHeight + "px";
   }
+}
+
+onMounted(async () => {
+  await nextTick();
+  updateNavHeight();
+  // Recalculate if window resizes (responsive)
+  window.addEventListener("resize", updateNavHeight);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateNavHeight);
 });
 </script>

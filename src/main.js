@@ -10,9 +10,7 @@ import App from "@/App.vue";
 
 import { useStore } from "@/store";
 
-import { Icon } from '@iconify/vue'
-
-
+import { Icon } from "@iconify/vue";
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -34,8 +32,7 @@ onAuthStateChanged(auth, async (user) => {
     name: import.meta.env.VITE_INTERFACE,
   });
 
-  app.component('Icon', Icon)
-
+  app.component("Icon", Icon);
 
   const software = import.meta.env.VITE_INTERFACE;
 
@@ -47,3 +44,13 @@ onAuthStateChanged(auth, async (user) => {
     app.mount("#app");
   })();
 });
+
+// ✅ Register SW only in production
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((reg) => console.log("SW registered:", reg))
+      .catch((err) => console.log("SW registration failed:", err));
+  });
+}

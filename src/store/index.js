@@ -1,10 +1,16 @@
 import { defineStore } from "pinia";
 import { reactive } from "vue";
-import api from "@/api";
+
+import fn from "@/functions";
+import { softwares } from "@/data";
+
+const name = import.meta.env.VITE_INTERFACE;
 
 export const useStore = defineStore("unknown", () => {
   const software = reactive({
-    name: import.meta.env.VITE_INTERFACE,
+    name,
+    info: {},
+    navigation: softwares[name],
   });
 
   const info = reactive({});
@@ -12,13 +18,9 @@ export const useStore = defineStore("unknown", () => {
   async function init() {
     console.info("App Initialized");
 
-    try {
-      let { data } = await api.get("/data");
-      Object.assign(info, data);
-      console.log(info);
-    } catch (error) {
-      console.error(error);
-    }
+    // Get & Set App Data
+    const data = await fn.getData();
+    Object.assign(info, data);
   }
   return { init, software, info };
 });

@@ -10,6 +10,8 @@ import App from "@/App.vue";
 
 import { useStore } from "@/store";
 
+
+
 const pinia = createPinia();
 const app = createApp(App);
 

@@ -9,30 +9,38 @@ async function loadRoutes(software) {
     )
   );
 
-  // Build route definitions
-  const routes = Object.keys(pages).map((path) => {
-    let name = path
-      .replace(`../interface/${software}/`, "")
-      .replace(".vue", "")
-      .toLowerCase();
+  let routes = [
+    {
+      path: "/",
+      name: "screen",
+      component: () => import("@/layouts/Screen.vue"),
+      // Build route definitions
+      children: Object.keys(pages).map((path) => {
+        let name = path
+          .replace(`../interface/${software}/`, "")
+          .replace(".vue", "")
+          .toLowerCase();
 
-    // Clean up: e.g. Index.vue -> /
-    let routePath =
-      name.toLowerCase() === "index" ? "/" : `/${name.replace(/index$/, "")}`;
+        // Clean up: e.g. Index.vue -> /
+        let routePath =
+          name.toLowerCase() === "index"
+            ? "/"
+            : `/${name.replace(/index$/, "")}`;
 
-    return {
-      path: name == "splash" ? "" : routePath,
-      name,
-      component: pages[path], // lazy-loaded
-    };
-  });
-
-  // Add a catch-all 404 route
-  routes.push({
-    path: "/:pathMatch(.*)*",
-    name: "404",
-    component: () => import("@/pages/Error/404.vue"),
-  });
+        return {
+          path: name == "splash" ? "" : routePath,
+          name,
+          component: pages[path], // lazy-loaded
+        };
+      }),
+    },
+    // Add a catch-all 404 route
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: () => import("@/pages/Error/404.vue"),
+    },
+  ];
 
   console.log(routes);
 

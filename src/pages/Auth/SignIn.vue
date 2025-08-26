@@ -54,9 +54,11 @@
         <p class="text-[#4e7097] text-sm underline cursor-pointer">
           Forgot Password?
         </p>
-        <p class="text-[#4e7097] text-sm underline cursor-pointer">
-          Don’t have an account? <span class="font-medium">Sign Up</span>
-        </p>
+        <router-link to="./signup">
+          <p class="text-[#4e7097] text-sm underline cursor-pointer">
+            Don’t have an account? <span class="font-medium">Sign Up</span>
+          </p>
+        </router-link>
       </div>
     </div>
   </div>

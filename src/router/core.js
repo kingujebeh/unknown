@@ -36,9 +36,6 @@ async function loadRoutes(software) {
       }),
     },
 
-    // Auth routes under Auth layout
-    await createAuthRoutes(software),
-
     // Catch-all 404
     {
       path: "/:pathMatch(.*)*",
@@ -47,6 +44,11 @@ async function loadRoutes(software) {
     },
   ];
 
+  // Add Auth routes if available
+  const authRoutes = await createAuthRoutes(software);
+  if (authRoutes) {
+    routes.splice(1, 0, authRoutes); // insert before 404
+  }
 
   return routes;
 }

@@ -29,6 +29,8 @@ async function createAuthRoutes(software) {
         };
       }),
     };
+  } else {
+    return null;
   }
 }
 

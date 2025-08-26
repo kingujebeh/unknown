@@ -48,5 +48,5 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@v2
         with:
           path: dist/
-          destination: supercpanel/client/dist
+          destination: great-unknown/client/dist
           parent: false

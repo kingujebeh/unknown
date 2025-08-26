@@ -8,6 +8,8 @@ import Router from "@/router";
 
 import App from "@/App.vue";
 
+import Back from "@/components/ui/Buttons/Back.vue";
+
 import { useStore } from "@/store";
 
 import { Icon } from "@iconify/vue";
@@ -33,6 +35,7 @@ onAuthStateChanged(auth, async (user) => {
   });
 
   app.component("Icon", Icon);
+  app.component("Back", Back);
 
   const software = import.meta.env.VITE_INTERFACE;
 
@@ -46,11 +49,13 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // ✅ Register SW only in production
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((reg) => console.log("SW registered:", reg))
-      .catch((err) => console.log("SW registration failed:", err));
-  });
+if (import.meta.env.PROD) {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((reg) => console.log("SW registered:", reg))
+        .catch((err) => console.log("SW registration failed:", err));
+    });
+  }
 }

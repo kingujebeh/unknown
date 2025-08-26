@@ -1,4 +1,16 @@
 const softwares = {
+  kingdom: {
+    auth: false,
+  },
+  business: {
+    auth: false,
+  },
+  community: {
+    auth: false,
+  },
+  me: {
+    auth: false,
+  },
   store: {
     auth: false,
     color: "#639155",

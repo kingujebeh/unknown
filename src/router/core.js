@@ -14,6 +14,7 @@ const softwareGlobs = {
 };
 
 async function loadRoutes(softwareArg) {
+  // Determine active software
   const software =
     typeof __SOFTWARE__ !== "undefined"
       ? __SOFTWARE__
@@ -23,17 +24,20 @@ async function loadRoutes(softwareArg) {
     throw new Error("No software specified (missing __SOFTWARE__ or env).");
   }
 
-  // Get the statically defined pages for this software
+  // Get the pages for this software
   const pages = softwareGlobs[software];
   if (!pages) throw new Error(`No routes found for software: ${software}`);
 
+  // Map pages to route children
   const children = Object.keys(pages).map((path) => {
+    // Remove folder prefix and extension
     let name = path
-      .replace(`../interface/${software}/`, "")
+      .replace(new RegExp(`^\\.\\.\\/interface\\/${software}\\/`), "")
       .replace(".vue", "")
       .toLowerCase();
 
-    let routePath = name === "index" ? "/" : `/${name.replace(/index$/, "")}`;
+    // Convert "index" files to "/"
+    const routePath = name === "index" ? "/" : `/${name.replace(/index$/, "")}`;
 
     return {
       path: name === "splash" ? "" : routePath,
@@ -42,6 +46,7 @@ async function loadRoutes(softwareArg) {
     };
   });
 
+  // Main routes
   const routes = [
     {
       path: "/",
@@ -56,6 +61,7 @@ async function loadRoutes(softwareArg) {
     },
   ];
 
+  // Insert auth routes if the software supports them
   if (softwares[software]?.auth) {
     const authRoutes = await createAuthRoutes(software);
     if (authRoutes) {

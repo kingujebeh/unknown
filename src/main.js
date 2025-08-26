@@ -23,7 +23,7 @@ onAuthStateChanged(auth, async (user) => {
   const store = useStore();
 
   if (user) {
-    console.log(user);
+    console.log(user.displayName);
   } else {
     console.log(user);
   }

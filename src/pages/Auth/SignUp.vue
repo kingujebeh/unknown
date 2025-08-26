@@ -71,6 +71,12 @@
       >
         Sign Up
       </button>
+      <button
+        @click="signInWithGoogle()"
+        class="w-full rounded-lg h-12 bg-[#1979e6] text-slate-50 text-base font-bold hover:bg-[#166cd3] transition-colors"
+      >
+        Sign up with Google
+      </button>
 
       <!-- Links -->
       <router-link to="./signin">
@@ -83,3 +89,26 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@/firebase";
+
+async function signInWithGoogle() {
+  try {
+    const result = await signInWithPopup(auth, provider);
+
+    // Google Access Token
+    const credential = provider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // Signed-in user info
+    const user = result.user;
+
+    console.log("User Info:", user);
+    console.log("Token:", token);
+  } catch (error) {
+    console.error("Google sign-in error:", error);
+  }
+}
+</script>

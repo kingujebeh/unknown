@@ -1,3 +1,5 @@
+import { createAuthRoutes } from "./auth";
+
 // Grab ALL .vue files under /interface at build time
 const allPages = import.meta.glob("../interface/**/*.vue");
 
@@ -8,13 +10,6 @@ async function loadRoutes(software) {
       ([path]) =>
         path.includes(`/interface/${software}/`) &&
         !path.includes(`/interface/${software}/Auth/`) // exclude Auth for now
-    )
-  );
-
-  // Filter Auth pages separately
-  const authPages = Object.fromEntries(
-    Object.entries(allPages).filter(([path]) =>
-      path.includes(`/interface/${software}/Auth/`)
     )
   );
 
@@ -42,26 +37,7 @@ async function loadRoutes(software) {
     },
 
     // Auth routes under Auth layout
-    {
-      path: "/auth",
-      name: "auth",
-      component: () => import("@/layouts/Auth.vue"),
-      children: Object.keys(authPages).map((path) => {
-        let name = path
-          .replace(`../interface/${software}/Auth/`, "")
-          .replace(".vue", "")
-          .toLowerCase();
-
-        // Automatically generate route path from file name
-        let routePath = name === "index" ? "" : name;
-
-        return {
-          path: routePath,
-          name,
-          component: authPages[path], // lazy-loaded
-        };
-      }),
-    },
+    await createAuthRoutes(software),
 
     // Catch-all 404
     {

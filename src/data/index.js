@@ -1,5 +1,6 @@
 const softwares = {
   store: {
+    auth: false,
     color: "#639155",
     bgColor: "#ffffff",
     showLabel: false,
@@ -48,6 +49,7 @@ const softwares = {
     ],
   },
   shop: {
+    auth: false,
     color: "#111518",
     bgColor: "#ffffff",
     showLabel: true,
@@ -80,6 +82,7 @@ const softwares = {
     ],
   },
   pro: {
+    auth: true,
     color: "#ffffff",
     bgColor: "#1b2127",
     fonts: `'Plus Jakarta Sans', 'Noto Sans', sans-serif`,

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "node -e \"import('./vite.config.js').then(m => m.buildAll())\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --watch"
   },
   "dependencies": {
     "@fontsource/noto-sans": "^5.2.7",

@@ -2,7 +2,8 @@
 import { createAuthRoutes } from "./auth";
 import { softwares } from "@/data";
 
-const allGlobs = {
+// Predefine static globs for each software folder
+const softwareGlobs = {
   kingdom: import.meta.glob("../interface/kingdom/**/*.vue"),
   business: import.meta.glob("../interface/business/**/*.vue"),
   community: import.meta.glob("../interface/community/**/*.vue"),
@@ -13,7 +14,6 @@ const allGlobs = {
 };
 
 async function loadRoutes(softwareArg) {
-  // ✅ works in both build and test
   const software =
     typeof __SOFTWARE__ !== "undefined"
       ? __SOFTWARE__
@@ -23,29 +23,31 @@ async function loadRoutes(softwareArg) {
     throw new Error("No software specified (missing __SOFTWARE__ or env).");
   }
 
-  const pages = allGlobs[software];
+  // Get the statically defined pages for this software
+  const pages = softwareGlobs[software];
   if (!pages) throw new Error(`No routes found for software: ${software}`);
 
-  let routes = [
+  const children = Object.keys(pages).map((path) => {
+    let name = path
+      .replace(`../interface/${software}/`, "")
+      .replace(".vue", "")
+      .toLowerCase();
+
+    let routePath = name === "index" ? "/" : `/${name.replace(/index$/, "")}`;
+
+    return {
+      path: name === "splash" ? "" : routePath,
+      name,
+      component: pages[path],
+    };
+  });
+
+  const routes = [
     {
       path: "/",
       name: "screen",
       component: () => import("@/layouts/Screen.vue"),
-      children: Object.keys(pages).map((path) => {
-        let name = path
-          .replace(`../interface/${software}/`, "")
-          .replace(".vue", "")
-          .toLowerCase();
-
-        let routePath =
-          name === "index" ? "/" : `/${name.replace(/index$/, "")}`;
-
-        return {
-          path: name === "splash" ? "" : routePath,
-          name,
-          component: pages[path],
-        };
-      }),
+      children,
     },
     {
       path: "/:pathMatch(.*)*",

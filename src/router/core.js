@@ -47,7 +47,6 @@ async function loadRoutes(software) {
     },
   ];
 
-  console.log(routes);
 
   return routes;
 }

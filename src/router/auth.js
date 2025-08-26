@@ -7,7 +7,6 @@ async function createAuthRoutes(software) {
     // Filter Auth pages separately
     const authPages = import.meta.glob("../pages/Auth/**/*.vue");
 
-    console.log(authPages);
     return {
       path: "/auth",
       name: "auth",

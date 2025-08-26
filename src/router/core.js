@@ -1,7 +1,7 @@
+// router/core.js
 import { createAuthRoutes } from "./auth";
 import { softwares } from "@/data";
 
-// Declare static globs (Vite requires this)
 const allGlobs = {
   kingdom: import.meta.glob("../interface/kingdom/**/*.vue"),
   business: import.meta.glob("../interface/business/**/*.vue"),
@@ -12,7 +12,17 @@ const allGlobs = {
   pro: import.meta.glob("../interface/pro/**/*.vue"),
 };
 
-async function loadRoutes(software) {
+async function loadRoutes(softwareArg) {
+  // ✅ works in both build and test
+  const software =
+    typeof __SOFTWARE__ !== "undefined"
+      ? __SOFTWARE__
+      : softwareArg || import.meta.env.VITE_INTERFACE;
+
+  if (!software) {
+    throw new Error("No software specified (missing __SOFTWARE__ or env).");
+  }
+
   const pages = allGlobs[software];
   if (!pages) throw new Error(`No routes found for software: ${software}`);
 
@@ -44,7 +54,6 @@ async function loadRoutes(software) {
     },
   ];
 
-  // Add Auth routes if enabled in softwares
   if (softwares[software]?.auth) {
     const authRoutes = await createAuthRoutes(software);
     if (authRoutes) {

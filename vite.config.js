@@ -110,7 +110,7 @@ export async function buildAll() {
     try {
       await build({
         root: process.cwd(),
-        configFile: false, // skip reading vite.config.js
+        configFile: false,
         plugins: [InterfaceReplacePlugin(software), vue(), tailwindcss()],
         resolve: {
           alias: {
@@ -118,24 +118,9 @@ export async function buildAll() {
           },
         },
         define: {
+          __SOFTWARE__: JSON.stringify(software), // 👈 inject global
           "import.meta.env.VITE_INTERFACE": JSON.stringify(software),
-          "import.meta.env.VITE_API_KEY": JSON.stringify(baseEnv.VITE_API_KEY),
-          "import.meta.env.VITE_AUTH_DOMAIN": JSON.stringify(
-            baseEnv.VITE_AUTH_DOMAIN
-          ),
-          "import.meta.env.VITE_PROJECT_ID": JSON.stringify(
-            baseEnv.VITE_PROJECT_ID
-          ),
-          "import.meta.env.VITE_STORAGE_BUCKET": JSON.stringify(
-            baseEnv.VITE_STORAGE_BUCKET
-          ),
-          "import.meta.env.VITE_MESSAGING_SENDER_ID": JSON.stringify(
-            baseEnv.VITE_MESSAGING_SENDER_ID
-          ),
-          "import.meta.env.VITE_APP_ID": JSON.stringify(baseEnv.VITE_APP_ID),
-          "import.meta.env.VITE_MEASUREMENT_ID": JSON.stringify(
-            baseEnv.VITE_MEASUREMENT_ID
-          ),
+          // ... keep your Firebase/env stuff
         },
         build: {
           outDir: `dist/${software}`,
@@ -143,6 +128,7 @@ export async function buildAll() {
           manifest: true,
         },
       });
+
       console.log(`✅ Finished building ${software}`);
       createWebManifest(software); // ✅ add PWA manifest
 

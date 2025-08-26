@@ -1,20 +1,22 @@
 import { createAuthRoutes } from "./auth";
+import { softwares } from "@/data";
 
-// Grab ALL .vue files under /interface at build time
-const allPages = import.meta.glob("../interface/**/*.vue");
+// Declare static globs (Vite requires this)
+const allGlobs = {
+  kingdom: import.meta.glob("../interface/kingdom/**/*.vue"),
+  business: import.meta.glob("../interface/business/**/*.vue"),
+  community: import.meta.glob("../interface/community/**/*.vue"),
+  me: import.meta.glob("../interface/me/**/*.vue"),
+  store: import.meta.glob("../interface/store/**/*.vue"),
+  shop: import.meta.glob("../interface/shop/**/*.vue"),
+  pro: import.meta.glob("../interface/pro/**/*.vue"),
+};
 
 async function loadRoutes(software) {
-  // Filter only the pages for the selected software
-  const pages = Object.fromEntries(
-    Object.entries(allPages).filter(
-      ([path]) =>
-        path.includes(`/interface/${software}/`) &&
-        !path.includes(`/interface/${software}/Auth/`) // exclude Auth for now
-    )
-  );
+  const pages = allGlobs[software];
+  if (!pages) throw new Error(`No routes found for software: ${software}`);
 
   let routes = [
-    // Main routes under Screen layout
     {
       path: "/",
       name: "screen",
@@ -31,12 +33,10 @@ async function loadRoutes(software) {
         return {
           path: name === "splash" ? "" : routePath,
           name,
-          component: pages[path], // lazy-loaded
+          component: pages[path],
         };
       }),
     },
-
-    // Catch-all 404
     {
       path: "/:pathMatch(.*)*",
       name: "404",
@@ -44,10 +44,12 @@ async function loadRoutes(software) {
     },
   ];
 
-  // Add Auth routes if available
-  const authRoutes = await createAuthRoutes(software);
-  if (authRoutes) {
-    routes.splice(1, 0, authRoutes); // insert before 404
+  // Add Auth routes if enabled in softwares
+  if (softwares[software]?.auth) {
+    const authRoutes = await createAuthRoutes(software);
+    if (authRoutes) {
+      routes.splice(1, 0, authRoutes);
+    }
   }
 
   return routes;

@@ -1,6 +1,7 @@
 import { softwares } from "@/data";
 
 async function createAuthRoutes(software) {
+  console.log(softwares[software]);
   const isToCreate = softwares[software].auth;
 
   if (isToCreate) {

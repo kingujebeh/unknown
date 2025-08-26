@@ -12,7 +12,7 @@
         </h2>
       </div>
 
-      <!-- Email -->
+      <!-- First Name -->
       <div class="mb-4">
         <label class="flex flex-col">
           <span class="text-[#0e141b] text-base font-medium mb-2">
@@ -25,7 +25,7 @@
         </label>
       </div>
 
-      <!-- Email -->
+      <!-- Last Name -->
       <div class="mb-4">
         <label class="flex flex-col">
           <span class="text-[#0e141b] text-base font-medium mb-2">
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Password -->
-      <div class="mb-4">
+      <div class="mb-6">
         <label class="flex flex-col">
           <span class="text-[#0e141b] text-base font-medium mb-2">
             Password
@@ -65,16 +65,23 @@
         </label>
       </div>
 
-      <!-- Button -->
+      <!-- Primary Sign Up Button -->
       <button
-        class="w-full rounded-lg h-12 bg-[#1979e6] text-slate-50 text-base font-bold hover:bg-[#166cd3] transition-colors"
+        class="w-full rounded-lg h-12 bg-[#1979e6] text-slate-50 text-base font-bold hover:bg-[#166cd3] transition-colors mb-3"
       >
         Sign Up
       </button>
+
+      <!-- Google Sign Up Button -->
       <button
-        @click="signInWithGoogle()"
-        class="w-full rounded-lg h-12 bg-[#1979e6] text-slate-50 text-base font-bold hover:bg-[#166cd3] transition-colors"
+        @click="signInWithGoogle"
+        class="w-full flex items-center justify-center gap-3 rounded-lg h-12 border border-gray-300 bg-white text-[#0e141b] text-base font-medium hover:bg-gray-50 transition-colors"
       >
+        <img
+          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+          alt="Google"
+          class="w-5 h-5"
+        />
         Sign up with Google
       </button>
 

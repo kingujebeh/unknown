@@ -1,9 +1,9 @@
-import { projects } from "@/data";
+import { getProjects } from "@/data";
 import { createAuthRoutes } from "./auth";
 
 async function loadRoutes(project) {
   project = project || import.meta.env.VITE_PROJECT;
-  const software = projects[project];
+  const software = getProjects(project)
   if (!software) throw new Error(`No software found for VITE_PROJECT=${project}`);
 
   const pages = software.interface();

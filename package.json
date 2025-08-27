@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "node ./build --dev & chokidar 'src/**/*' 'interface/**/*' 'components/**/*' 'layouts/**/*' 'pages/**/*' 'store/**/*' 'router/**/*' -c 'node ./build --sync'",
+    "dev": "node ./build --dev --watch",
     "build": "node ./build",
     "test": "vitest --watch"
   },

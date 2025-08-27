@@ -53,5 +53,3 @@ if (import.meta.env.PROD) {
 }
 
 console.log(import.meta.env.VITE_PROJECT);
-console.log(import.meta.env.VITE_PROJECT, 'ha');
-console.log(import.meta.env.VITE_PROJECT, 'ha');

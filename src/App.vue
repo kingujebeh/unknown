@@ -8,7 +8,7 @@
 import { useTitle } from "@vueuse/core";
 import { useHead } from "@vueuse/head";
 
-useTitle(import.meta.env.VITE_INTERFACE);
+useTitle(import.meta.env.VITE_PROJECT);
 
 if (import.meta.env.PROD) {
   useHead({

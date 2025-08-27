@@ -4,7 +4,7 @@ import { auth, onAuthStateChanged } from "./firebase";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
-import Router from "@/router";
+import router from "@/router";
 
 import App from "@/App.vue";
 
@@ -31,18 +31,13 @@ onAuthStateChanged(auth, async (user) => {
   store.init();
 
   app.provide("software", {
-    name: import.meta.env.VITE_INTERFACE,
+    name: import.meta.env.VITE_PROJECT,
   });
 
   app.component("Icon", Icon);
   app.component("Back", Back);
 
-  const software = import.meta.env.VITE_INTERFACE;
-
   (async () => {
-    const factory = new Router(software);
-    const router = await factory.create();
-
     app.use(router);
     app.mount("#app");
   })();
@@ -52,7 +47,9 @@ onAuthStateChanged(auth, async (user) => {
 if (import.meta.env.PROD) {
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js");
+      navigator.serviceWorker.register("./sw.js");
     });
   }
 }
+
+console.log(import.meta.env.VITE_PROJECT);

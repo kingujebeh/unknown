@@ -1,72 +1,26 @@
-// router/core.js
+import { projects } from "@/data";
 import { createAuthRoutes } from "./auth";
-import { softwares } from "@/data";
 
-// Predefine static globs for each software folder
-const softwareGlobs = {
-  kingdom: import.meta.glob("../interface/kingdom/**/*.vue"),
-  business: import.meta.glob("../interface/business/**/*.vue"),
-  community: import.meta.glob("../interface/community/**/*.vue"),
-  me: import.meta.glob("../interface/me/**/*.vue"),
-  store: import.meta.glob("../interface/store/**/*.vue"),
-  shop: import.meta.glob("../interface/shop/**/*.vue"),
-  pro: import.meta.glob("../interface/pro/**/*.vue"),
-};
+async function loadRoutes(project) {
+  project = project || import.meta.env.VITE_PROJECT;
+  const software = projects[project];
+  if (!software) throw new Error(`No software found for VITE_PROJECT=${project}`);
 
-async function loadRoutes(softwareArg) {
-  // Determine active software
-  const software =
-    typeof __SOFTWARE__ !== "undefined"
-      ? __SOFTWARE__
-      : softwareArg || import.meta.env.VITE_INTERFACE;
-
-  if (!software) {
-    throw new Error("No software specified (missing __SOFTWARE__ or env).");
-  }
-
-  // Get the pages for this software
-  const pages = softwareGlobs[software];
-  if (!pages) throw new Error(`No routes found for software: ${software}`);
-
-  // Map pages to route children
-  const children = Object.keys(pages).map((path) => {
-    // Remove folder prefix and extension
-    let name = path
-      .replace(new RegExp(`^\\.\\.\\/interface\\/${software}\\/`), "")
-      .replace(".vue", "")
-      .toLowerCase();
-
-    // Convert "index" files to "/"
-    const routePath = name === "index" ? "/" : `/${name.replace(/index$/, "")}`;
-
-    return {
-      path: name === "splash" ? "" : routePath,
-      name,
-      component: pages[path],
-    };
+  const pages = software.interface();
+  const children = Object.keys(pages).map((filePath) => {
+    const name = filePath.split("/").pop().replace(".vue", "").toLowerCase();
+    const path = name === "index" ? "/" : name === "splash" ? "" : `/${name}`;
+    return { path, name, component: pages[filePath] };
   });
 
-  // Main routes
   const routes = [
-    {
-      path: "/",
-      name: "screen",
-      component: () => import("@/layouts/Screen.vue"),
-      children,
-    },
-    {
-      path: "/:pathMatch(.*)*",
-      name: "404",
-      component: () => import("@/pages/Error/404.vue"),
-    },
+    { path: "/", name: "screen", component: () => import("@/layouts/Screen.vue"), children },
+    { path: "/:pathMatch(.*)*", name: "404", component: () => import("@/pages/Error/404.vue") },
   ];
 
-  // Insert auth routes if the software supports them
-  if (softwares[software]?.auth) {
-    const authRoutes = await createAuthRoutes(software);
-    if (authRoutes) {
-      routes.splice(1, 0, authRoutes);
-    }
+  if (software.auth) {
+    const authRoutes = await createAuthRoutes(project);
+    if (authRoutes) routes.splice(1, 0, authRoutes);
   }
 
   return routes;

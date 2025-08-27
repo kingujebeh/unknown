@@ -2,16 +2,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { loadRoutes } from "./core";
 
-export default class RouterFactory {
-  constructor(software) {
-    this.software = software;
-  }
+const routes = await loadRoutes(import.meta.env.VITE_PROJECT);
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
 
-  async create() {
-    const routes = await loadRoutes(this.software);
-    return createRouter({
-      history: createWebHistory(),
-      routes,
-    });
-  }
-}
+export default router;

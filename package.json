@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node -e \"import('./vite.config.js').then(m => m.buildAll())\"",
+    "build:all": "node -e \"import('./vite.config.js').then(m => m.buildAll())\"",
+    "build": "node --watch ./build",
     "preview": "vite preview",
     "test": "vitest --watch"
   },

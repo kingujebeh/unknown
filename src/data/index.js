@@ -1,18 +1,23 @@
-const softwares = {
+const projects = {
   kingdom: {
     auth: false,
+    interface: ()=> import.meta.glob("../interface/kingdom/**/*.vue"),
   },
   business: {
     auth: false,
+    interface: ()=> import.meta.glob("../interface/business/**/*.vue"),
   },
   community: {
     auth: false,
+    interface: ()=> import.meta.glob("../interface/community/**/*.vue"),
   },
   me: {
     auth: false,
+    interface: ()=> import.meta.glob("../interface/me/**/*.vue"),
   },
   store: {
     auth: false,
+    interface: ()=> import.meta.glob("../interface/store/**/*.vue"),
     color: "#639155",
     bgColor: "#ffffff",
     showLabel: false,
@@ -62,6 +67,7 @@ const softwares = {
   },
   shop: {
     auth: false,
+    interface: ()=> import.meta.glob("../interface/shop/**/*.vue"),
     color: "#111518",
     bgColor: "#ffffff",
     showLabel: true,
@@ -95,6 +101,7 @@ const softwares = {
   },
   pro: {
     auth: true,
+    interface: ()=> import.meta.glob("../interface/pro/**/*.vue"),
     color: "#ffffff",
     bgColor: "#1b2127",
     fonts: `'Plus Jakarta Sans', 'Noto Sans', sans-serif`,
@@ -120,4 +127,4 @@ const softwares = {
   },
 };
 
-export { softwares };
+export { projects };

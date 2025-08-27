@@ -1,8 +1,8 @@
-import { softwares } from "@/data";
+import { projects } from "@/data";
 
 async function createAuthRoutes(software) {
-  console.log(softwares[software]);
-  const isToCreate = softwares[software].auth;
+  console.log(projects[software]);
+  const isToCreate = projects[software].auth;
 
   if (isToCreate) {
     // Filter Auth pages separately

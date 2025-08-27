@@ -1,16 +1,16 @@
-import { expect, test } from "vitest";
-import { createApp } from "vue";
-import { createPinia } from "pinia";
+import { expect, test, beforeEach } from "vitest";
+import { createPinia, setActivePinia } from "pinia";
 import { useStore } from "@/store";
-import App from "@/App.vue";
 
-const pinia = createPinia();
-const app = createApp(App);
+let store;
 
-app.use(pinia);
+beforeEach(() => {
+  // Create a fresh Pinia instance for each test
+  const pinia = createPinia();
+  setActivePinia(pinia);  // <-- this makes Pinia "active"
+  store = useStore();
+});
 
-const store = useStore();
-
-test(() => {
-  expect(store.name).toBe(import.meta.env.VITE_INTERFACE);
+test("software store has correct name from env", () => {
+  expect(store.name).toBe(import.meta.env.VITE_PROJECT);
 });

@@ -32,12 +32,9 @@ jobs:
           echo "VITE_APP_ID=${{ secrets.VITE_APP_ID }}" >> .env.production
           echo "VITE_MEASUREMENT_ID=${{ secrets.VITE_MEASUREMENT_ID }}" >> .env.production
 
-      - name: Build Vite app
-        run: npm run build
-
-
-      - name: Build Vite app
-        run: npm run build
+      # 🔥 Run your custom build script
+      - name: Build all softwares
+        run: node ./build/index.js
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2

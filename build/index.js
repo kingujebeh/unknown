@@ -1,12 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { spawn } from "child_process";
+import chokidar from "chokidar";
 import { projects } from "../src/data/index.js";
 
 const softwares = Object.keys(projects).sort((a, b) => a.localeCompare(b));
 const rootDir = path.resolve("./projects");
-const distRoot = path.resolve("./dist"); // merged dist output
-const swFile = path.resolve("./src/service/sw.js"); // service worker
+const distRoot = path.resolve("./dist");
+const swFile = path.resolve("./src/service/sw.js");
 
 // Template paths
 const templateMain = path.resolve("./src/main.js");
@@ -26,7 +27,9 @@ const envContentBase = fs.existsSync(templateEnv)
   ? fs.readFileSync(templateEnv, "utf-8")
   : "";
 
-// Helpers
+/* ----------------------------
+   Helpers
+---------------------------- */
 function createDir(dirPath) {
   if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, { recursive: true });
 }
@@ -43,19 +46,20 @@ function copyFolder(src, dest) {
 }
 
 function runCommand(cmd, cwd) {
+  const [command, ...args] = cmd.split(" ");
+  const proc = spawn(command, args, { cwd, stdio: "inherit", shell: true });
   return new Promise((resolve, reject) => {
-    const [command, ...args] = cmd.split(" ");
-    const proc = spawn(command, args, { cwd, stdio: "inherit", shell: true });
     proc.on("close", (code) =>
       code === 0 ? resolve() : reject(new Error(`Command failed: ${cmd}`))
     );
   });
 }
 
-// --- PWA helpers ---
+/* ----------------------------
+   PWA helpers
+---------------------------- */
 function capitalize(str) {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
 }
 
 function createManifestForSoftware(software, distPath) {
@@ -84,12 +88,48 @@ function createManifestForSoftware(software, distPath) {
     path.join(distPath, "manifest.json"),
     JSON.stringify(manifest, null, 2)
   );
-
   console.log(`📄 Added manifest.json → ${distPath}/manifest.json`);
 }
 
-// --- Build task ---
-function createBuildTask(software) {
+/* ----------------------------
+   Shared file sync
+---------------------------- */
+function syncSharedFiles(software) {
+  const softwarePath = path.join(rootDir, software);
+  const srcPath = path.join(softwarePath, "src");
+
+  // Re-copy updated shared folders
+  const foldersToCopy = [
+    "api", "assets", "components", "data",
+    "firebase", "functions", "layouts",
+    "pages", "router", "service", "store"
+  ];
+  foldersToCopy.forEach((folder) =>
+    copyFolder(path.join("./src", folder), path.join(srcPath, folder))
+  );
+
+  // Re-copy interface files
+  const softwareInterfacePath = path.join("./src/interface", software);
+  const targetInterfacePath = path.join(srcPath, "interface", software);
+  if (fs.existsSync(softwareInterfacePath)) {
+    createDir(targetInterfacePath);
+    fs.readdirSync(softwareInterfacePath).forEach((file) => {
+      if (file.endsWith(".vue")) {
+        fs.copyFileSync(
+          path.join(softwareInterfacePath, file),
+          path.join(targetInterfacePath, file)
+        );
+      }
+    });
+  }
+
+  console.log(`♻️ Synced shared files into ${software}/src`);
+}
+
+/* ----------------------------
+   Build task
+---------------------------- */
+function createBuildTask(software, isDev = false) {
   return async () => {
     const softwarePath = path.join(rootDir, software);
     const srcPath = path.join(softwarePath, "src");
@@ -106,52 +146,16 @@ function createBuildTask(software) {
     );
     fs.writeFileSync(path.join(softwarePath, "index.html"), indexHtmlContent);
 
-    // .env.production
+    // env.production + env.development
     let envContent = envContentBase.replace(/^VITE_PROJECT=.*$/m, "").trim();
     envContent += `\nVITE_PROJECT=${software}\n`;
     fs.writeFileSync(path.join(softwarePath, ".env.production"), envContent);
+    fs.writeFileSync(path.join(softwarePath, ".env.development"), envContent);
 
-    // ✅ .env.development
-    let devEnvContent = envContentBase.replace(/^VITE_PROJECT=.*$/m, "").trim();
-    devEnvContent += `\nVITE_PROJECT=${software}\n`;
-    fs.writeFileSync(path.join(softwarePath, ".env.development"), devEnvContent);
+    // Copy shared folders + interface files
+    syncSharedFiles(software);
 
-    // Copy common folders
-    const foldersToCopy = [
-      "api",
-      "assets",
-      "components",
-      "data",
-      "firebase",
-      "functions",
-      "layouts",
-      "pages",
-      "router",
-      "service",
-      "store",
-    ];
-    foldersToCopy.forEach((folder) =>
-      copyFolder(path.join("./src", folder), path.join(srcPath, folder))
-    );
-
-    // ✅ Copy software-specific interface folder
-    const softwareInterfacePath = path.join("./src/interface", software);
-    const targetInterfacePath = path.join(srcPath, "interface", software);
-
-    if (fs.existsSync(softwareInterfacePath)) {
-      createDir(targetInterfacePath);
-      fs.readdirSync(softwareInterfacePath).forEach((file) => {
-        const fullPath = path.join(softwareInterfacePath, file);
-        if (fs.lstatSync(fullPath).isFile() && file.endsWith(".vue")) {
-          fs.copyFileSync(fullPath, path.join(targetInterfacePath, file));
-        }
-      });
-      console.log(
-        `📂 Added .vue files → ${software}/src/interface/${software}`
-      );
-    }
-
-    // public + configs
+    // Copy configs + public
     if (fs.existsSync(templatePublic))
       copyFolder(templatePublic, path.join(softwarePath, "public"));
     if (fs.existsSync(viteConfigTemplate))
@@ -172,35 +176,46 @@ function createBuildTask(software) {
 
     console.log(`✅ Setup complete: ${software}`);
 
-    // Clean old dist
+    if (isDev) {
+      const port = 3000 + softwares.indexOf(software);
+      console.log(
+        `🚀 Starting dev server for ${software} on http://localhost:${port}`
+      );
+      spawn("npx", ["vite", "--port", port], {
+        cwd: softwarePath,
+        stdio: "inherit",
+        shell: true,
+      });
+      return;
+    }
+
+    // Production build
     if (fs.existsSync(distPath)) {
       fs.rmSync(distPath, { recursive: true, force: true });
     }
 
-    // Run vite build
     console.log(`📦 Building ${software}...`);
     await runCommand("npx vite build", softwarePath);
     console.log(`🚀 Finished building ${software}`);
 
-    // Copy to merged dist
     if (fs.existsSync(mergedDistPath)) {
       fs.rmSync(mergedDistPath, { recursive: true, force: true });
     }
     copyFolder(distPath, mergedDistPath);
     console.log(`📂 Copied ${software}/dist → dist/${software}`);
 
-    // Add sw.js
     if (fs.existsSync(swFile)) {
       fs.copyFileSync(swFile, path.join(mergedDistPath, "sw.js"));
       console.log(`🛠️ Added sw.js → dist/${software}/sw.js`);
     }
 
-    // Add manifest.json
     createManifestForSoftware(software, mergedDistPath);
   };
 }
 
-// --- Concurrency runner ---
+/* ----------------------------
+   Concurrency runner
+---------------------------- */
 async function runWithConcurrencyLimit(tasks, limit) {
   let nextTaskIndex = 0;
   const results = new Array(tasks.length);
@@ -226,22 +241,56 @@ async function runWithConcurrencyLimit(tasks, limit) {
   return results;
 }
 
-// --- Main runner ---
-async function setupAndBuildAll() {
-  if (fs.existsSync(distRoot)) {
-    fs.rmSync(distRoot, { recursive: true, force: true });
+/* ----------------------------
+   Main runner
+---------------------------- */
+async function setupAndBuildAll(isDev = false) {
+  if (!isDev) {
+    if (fs.existsSync(distRoot))
+      fs.rmSync(distRoot, { recursive: true, force: true });
+    createDir(distRoot);
   }
-  createDir(distRoot);
 
-  const tasks = softwares.map((sw) => createBuildTask(sw));
-  console.log(
-    `🚀 Starting builds with concurrency = 5 (${tasks.length} total)...`
-  );
-
-  await runWithConcurrencyLimit(tasks, 5);
-
-  console.log("\n🎉 All software builds finished and merged into /dist.");
+  const tasks = softwares.map((sw) => createBuildTask(sw, isDev));
+  if (isDev) {
+    console.log(`🚀 Starting dev servers for ${tasks.length} projects...`);
+    tasks.forEach((task) => task());
+  } else {
+    console.log(
+      `🚀 Starting builds with concurrency = 5 (${tasks.length} total)...`
+    );
+    await runWithConcurrencyLimit(tasks, 5);
+    console.log("\n🎉 All software builds finished and merged into /dist.");
+  }
 }
 
-// Execute
-setupAndBuildAll().catch((err) => console.error(err));
+/* ----------------------------
+   Watcher
+---------------------------- */
+function startWatcher(isDev) {
+  chokidar
+    .watch(["./src/**/*", "./public/**/*", "./index.html"], {
+      ignoreInitial: true,
+    })
+    .on("all", async (event, filePath) => {
+      console.log(`\n👀 Change detected (${event}): ${filePath}`);
+      if (isDev) {
+        softwares.forEach((sw) => syncSharedFiles(sw));
+      } else {
+        await setupAndBuildAll(false); // full rebuild for prod
+      }
+    });
+}
+
+/* ----------------------------
+   Execute
+---------------------------- */
+const isDev = process.argv.includes("--dev");
+const isWatch = process.argv.includes("--watch");
+
+setupAndBuildAll(isDev).catch((err) => console.error(err));
+
+if (isWatch) {
+  startWatcher(isDev);
+  console.log("👀 Watching for changes...");
+}

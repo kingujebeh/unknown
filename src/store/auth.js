@@ -1,36 +1,32 @@
+// auth.js
 import api from "@/api";
 
-async function signin() {
-  // Initialize One Tap
+function initGoogle() {
   window.google.accounts.id.initialize({
     client_id:
       "199011519338-dpeg8krd6645st6k8jr6fbuhncceb90c.apps.googleusercontent.com",
     callback: authUser,
-    ux_mode: "popup", // ensures popup instead of full redirect
+    ux_mode: "popup",
   });
 
-  // Render the Google Sign-In button (optional)
-  window.google.accounts.id.renderButton(
-    document.getElementById("googleBtn"),
-    { theme: "outline", size: "large" }
-  );
+  console.info("Google Initialized");
+}
 
-  // Or trigger the One Tap popup directly
+async function signin() {
   window.google.accounts.id.prompt();
 }
 
 async function authUser(response) {
-  console.log("Google ID Token:", response.credential); // JWT
+  console.log("Google ID Token:", response.credential);
 
   try {
     const { data } = await api.post("/auth", {
-      token: response.credential, // send ID token to backend
+      token: response.credential,
     });
-
     console.log("Backend response:", data);
   } catch (error) {
     console.error("Auth error:", error);
   }
 }
 
-export default { signin };
+export default { initGoogle, signin };

@@ -7,6 +7,8 @@
 <script setup>
 import { useTitle } from "@vueuse/core";
 import { useHead } from "@vueuse/head";
+import { onMounted } from "vue";
+import { useStore } from "@/store";
 
 useTitle(import.meta.env.VITE_PROJECT);
 
@@ -20,4 +22,9 @@ if (import.meta.env.PROD) {
     ],
   });
 }
+
+const store = useStore();
+onMounted(() => {
+  store.initGoogle();
+});
 </script>

@@ -15,55 +15,26 @@
         </h2>
       </div>
 
-      <!-- Email -->
-      <div class="mb-4">
-        <label class="flex flex-col">
-          <span class="text-[#0e141b] text-base font-medium mb-2">
-            Email Address
-          </span>
-          <input
-            placeholder="Enter your email"
-            class="w-full rounded-lg bg-[#e7edf3] h-14 p-4 text-base text-[#0e141b] placeholder:text-[#4e7097] focus:outline-none"
-          />
-        </label>
-      </div>
-
-      <!-- Password -->
-      <div class="mb-4">
-        <label class="flex flex-col">
-          <span class="text-[#0e141b] text-base font-medium mb-2">
-            Password
-          </span>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            class="w-full rounded-lg bg-[#e7edf3] h-14 p-4 text-base text-[#0e141b] placeholder:text-[#4e7097] focus:outline-none"
-          />
-        </label>
-      </div>
-
-      <!-- Button -->
-      <button
-        class="w-full rounded-lg h-12 bg-[#1979e6] text-slate-50 text-base font-bold hover:bg-[#166cd3] transition-colors"
-      >
-        Sign In
-      </button>
-
-      <!-- Links -->
-      <div class="mt-4 space-y-2 text-center">
-        <router-link to="./forgot-password">
-          <p class="text-[#4e7097] text-sm underline cursor-pointer">
-            Forgot Password?
-          </p>
-        </router-link>
-        <router-link to="./signup">
-          <p class="text-[#4e7097] text-sm underline cursor-pointer">
-            Don’t have an account? <span class="font-medium">Sign Up</span>
-          </p>
-        </router-link>
-      </div>
+      <button id="googleSignInBtn" @click="signin">Sign in with Google</button>
     </div>
   </div>
 </template>
 
+<script setup>
+function signin() {
+  let client;
 
+  client = google.accounts.oauth2.initTokenClient({
+    client_id:
+      "199011519338-dpeg8krd6645st6k8jr6fbuhncceb90c.apps.googleusercontent.com",
+    scope: "openid profile email",
+    ux_mode: "popup",
+    callback: (response) => {
+      console.log("Access Token:", response.access_token);
+      // send token to your backend if needed
+    },
+  });
+
+  client.requestAccessToken();
+}
+</script>

@@ -20,11 +20,11 @@ async function signin() {
 }
 
 async function authUser(response) {
-  console.log("Google token:", response);
+  console.log("Google token:", response, response.credential);
 
   try {
     const { data } = await api.post("/auth", {
-      token: response.access_token,
+      token: response.credential,
     });
 
     console.log(data);

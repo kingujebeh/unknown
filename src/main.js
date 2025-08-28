@@ -53,3 +53,4 @@ if (import.meta.env.PROD) {
 }
 
 console.log(import.meta.env.VITE_PROJECT);
+console.log(import.meta.env.VITE_AUTH_DOMAIN);

@@ -50,6 +50,7 @@ export function createBuildTask(
     envContent += `\nVITE_PROJECT=${software}\n`;
     fs.writeFileSync(path.join(softwarePath, ".env.production"), envContent);
     fs.writeFileSync(path.join(softwarePath, ".env.development"), envContent);
+    fs.writeFileSync(path.join(softwarePath, ".env.staging"), envContent);
 
     // Sync shared/interface files
     syncSharedFiles(software, rootDir);

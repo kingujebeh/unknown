@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://augmentplus.space/api",
+  baseURL: `https://${window.location.hostname}/api`,
 });

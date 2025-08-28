@@ -1,5 +1,4 @@
 import "./assets/css/main.css";
-import { auth, onAuthStateChanged } from "./firebase";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -17,31 +16,21 @@ import { Icon } from "@iconify/vue";
 const pinia = createPinia();
 const app = createApp(App);
 
-onAuthStateChanged(auth, async (user) => {
-  app.use(pinia);
+app.use(pinia);
 
-  const store = useStore();
+const store = useStore();
 
-  if (user) {
-    console.log(user.displayName);
-  } else {
-    console.log(user);
-  }
+store.init();
 
-  store.init();
-
-  app.provide("software", {
-    name: import.meta.env.VITE_PROJECT,
-  });
-
-  app.component("Icon", Icon);
-  app.component("Back", Back);
-
-  (async () => {
-    app.use(router);
-    app.mount("#app");
-  })();
+app.provide("software", {
+  name: import.meta.env.VITE_PROJECT,
 });
+
+app.component("Icon", Icon);
+app.component("Back", Back);
+
+app.use(router);
+app.mount("#app");
 
 // ✅ Register SW only in production
 if (import.meta.env.PROD) {

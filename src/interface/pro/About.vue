@@ -94,6 +94,8 @@
             >
             <span v-else class="truncate">Followed</span>
           </button>
+          <div id="googleBtn"></div>
+
         </div>
       </div>
       <p class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">

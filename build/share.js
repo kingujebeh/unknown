@@ -15,7 +15,6 @@ export function syncSharedFiles(software, rootDir) {
     "assets",
     "components",
     "data",
-    "firebase",
     "functions",
     "layouts",
     "pages",

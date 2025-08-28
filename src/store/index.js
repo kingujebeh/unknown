@@ -3,6 +3,7 @@ import { reactive } from "vue";
 
 import fn from "@/functions";
 import core from "./core";
+import auth from "./auth";
 import { getProjects } from "@/data";
 
 const name = import.meta.env.VITE_PROJECT;
@@ -29,5 +30,5 @@ export const useStore = defineStore("unknown", () => {
     Object.assign(info, data);
   }
 
-  return { init, software, info, user, ...core };
+  return { init, software, info, user, ...core, ...auth };
 });

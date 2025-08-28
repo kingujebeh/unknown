@@ -78,10 +78,20 @@
             </div>
           </div>
           <button
-            class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#283039] text-white text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px] @[480px]:w-auto"
-            @click="follow()"
+            class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#283039] text-white text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px] @[480px]:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
+            @click="toggleFollow"
+            :disabled="loading"
           >
-            <span v-if="!store.user.isFollowing" class="truncate">Follow</span>
+            <!-- Loading Spinner -->
+            <div v-if="loading" class="flex items-center gap-2">
+              <span class="loader"></span>
+              <span class="truncate">Loading...</span>
+            </div>
+
+            <!-- Normal states -->
+            <span v-else-if="!store.user.isFollowing" class="truncate"
+              >Follow</span
+            >
             <span v-else class="truncate">Followed</span>
           </button>
         </div>
@@ -102,94 +112,12 @@
       </h3>
       <div class="flex gap-3 p-3 flex-wrap pr-4">
         <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
+          v-for="skill in skills"
+          :key="skill"
+          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] px-4"
         >
           <p class="text-white text-sm font-medium leading-normal">
-            3D modeler
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            3D Rendering Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Autodesk Maya Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Cinema 4D Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Blender Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Adobe Photoshop Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Adobe Illustrator Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Graphic Designer
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Marvelous Designer Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            3D Sculpting Artist
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            ZBrush Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            Rhinoceros 3D Expert
-          </p>
-        </div>
-        <div
-          class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#283039] pl-4 pr-4"
-        >
-          <p class="text-white text-sm font-medium leading-normal">
-            SketchUp Expert
+            {{ skill }}
           </p>
         </div>
       </div>
@@ -573,12 +501,79 @@
 </template>
 
 <script setup>
+import { reactive, ref } from "vue";
 import { useStore } from "@/store";
-import { useRouter } from "vue-router";
 
 const store = useStore();
-const router = useRouter();
-function follow() {
-  store.follow(router);
+
+const skills = reactive([
+  "3D modeler",
+  "3D Rendering Expert",
+  "Autodesk Maya Expert",
+  "Cinema 4D Expert",
+  "Blender Expert",
+  "Adobe Photoshop Expert",
+  "Adobe Illustrator Expert",
+  "Graphic Designer",
+  "Marvelous Designer Expert",
+  "3D Sculpting Artist",
+  "ZBrush Expert",
+  "Rhinoceros 3D Expert",
+  "SketchUp Expert",
+]);
+
+const loading = ref(false);
+
+async function toggleFollow() {
+  if (loading.value) return; // prevent spamming
+
+  loading.value = true;
+  try {
+    if (store.user.isFollowing) {
+      await unfollow();
+    } else {
+      await follow();
+    }
+  } catch (err) {
+    console.error("Failed:", err);
+  } finally {
+    loading.value = false;
+  }
+}
+
+async function follow() {
+  let uid = store.user.uid;
+
+  if (uid) {
+    await store.follow(uid);
+  } else {
+    await store.signin();
+    await store.follow(uid);
+  }
+  console.info("Followed");
+}
+
+async function unfollow() {
+  let uid = store.user.uid;
+  if (uid) {
+    await store.unfollow(uid);
+  }
 }
 </script>
+
+<style scoped>
+.loader {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

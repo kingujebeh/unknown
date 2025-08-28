@@ -15,5 +15,23 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <div
+      id="g_id_onload"
+      data-client_id="199011519338-dpeg8krd6645st6k8jr6fbuhncceb90c.apps.googleusercontent.com"
+      data-auto_prompt="true"
+      data-context="signin"
+      data-ux_mode="popup"
+      data-callback="handleCredentialResponse"
+    ></div>
+
+    <script>
+      function handleCredentialResponse(response) {
+        // response.credential is a JWT ID token
+        console.log("ID Token:", response.credential);
+        // send to your backend to verify with Google's public keys
+      }
+    </script>
   </body>
 </html>

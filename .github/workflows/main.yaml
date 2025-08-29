@@ -42,3 +42,5 @@ jobs:
           path: dist/
           destination: great-unknown.appspot.com/client/dist
           parent: false
+          resumable: false
+

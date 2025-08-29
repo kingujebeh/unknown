@@ -82,20 +82,21 @@
             @click="toggleFollow"
             :disabled="loading"
           >
-            <!-- Loading Spinner -->
-            <div v-if="loading" class="flex items-center gap-2">
-              <span class="loader"></span>
-              <span class="truncate">Loading...</span>
-            </div>
+            <!-- loading state -->
+            <template v-if="loading">
+              <span class="flex items-center gap-2">
+                <span class="loader"></span>
+              </span>
+            </template>
 
-            <!-- Normal states -->
-            <span v-else-if="!store.user.isFollowing" class="truncate"
-              >Follow</span
-            >
-            <span v-else class="truncate">Followed</span>
+            <!-- normal state -->
+            <template v-else>
+              <span v-if="!store.user.isFollowing" class="truncate"
+                >Follow</span
+              >
+              <span v-else class="truncate">Followed</span>
+            </template>
           </button>
-          <div id="googleBtn"></div>
-
         </div>
       </div>
       <p class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
@@ -141,6 +142,8 @@
           Awards
         </h3>
         <div
+          v-for="(award, i) in awards"
+          :key="i"
           class="flex items-center gap-4 bg-[#111418] px-4 min-h-[72px] py-2"
         >
           <div
@@ -165,12 +168,12 @@
             <p
               class="text-white text-base font-medium leading-normal line-clamp-1"
             >
-              Design Excellence Award
+              {{ award.title }}
             </p>
             <p
               class="text-[#9cabba] text-sm font-normal leading-normal line-clamp-2"
             >
-              2021
+              {{ award.year }}
             </p>
           </div>
         </div>
@@ -178,10 +181,14 @@
       <h3
         class="text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4"
       >
-        Testimonials
+        Testimonials ({{ testimonials.length }})
       </h3>
       <div class="flex flex-col gap-8 overflow-x-hidden bg-[#111418] p-4">
-        <div class="flex flex-col gap-3 bg-[#111418]">
+        <div
+          v-for="(testimonial, i) in testimonials"
+          :key="i"
+          class="flex flex-col gap-3 bg-[#111418]"
+        >
           <div class="flex items-center gap-3">
             <div
               class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
@@ -191,9 +198,10 @@
             ></div>
             <div class="flex-1">
               <p class="text-white text-base font-medium leading-normal">
-                Sophia Bennett
+                {{ testimonial.client }},
+                <span class="text-sm">{{ testimonial.location }}</span>
               </p>
-              <p class="text-[#9cabba] text-sm font-normal leading-normal">
+              <p class="text-[#9cabba] text-xs font-normal leading-normal">
                 2023
               </p>
             </div>
@@ -291,9 +299,7 @@
             </div>
           </div>
           <p class="text-white text-base font-normal leading-normal">
-            Ethan's design expertise transformed our app. His user-centric
-            approach and attention to detail resulted in a seamless and engaging
-            experience for our users.
+            {{ testimonial.feedback }}
           </p>
           <div class="flex gap-9 text-[#9cabba]">
             <button class="flex items-center gap-2">
@@ -340,170 +346,13 @@
             </button>
           </div>
         </div>
-        <div class="flex flex-col gap-3 bg-[#111418]">
-          <div class="flex items-center gap-3">
-            <div
-              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-              style="
-                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjHTRtbuKj7-caZlixZqg7DdwHfaP05etYuofcRjxOZy3UB8GhkvBYXJ52n_DseggXcYsY9zQ-On8_vnVREoaDsXHdLYARkYAcEMxr0gx43wiyscUQdFF7xdcQYKkD5cTMeFO0QkwmlJkgCdUhgUYPENVRT89rwAeQ_TSjllzQnD6nrYp9nkrICfehd1CMb_BYAmqPpxEXMPBRIbqG1BSbhmuHRmyZIctAfFT3R8BK9uxOrzqNxT6tmGVbQ-g8Sr1vlvFGjWIL7tAj');
-              "
-            ></div>
-            <div class="flex-1">
-              <p class="text-white text-base font-medium leading-normal">
-                Liam Harper
-              </p>
-              <p class="text-[#9cabba] text-sm font-normal leading-normal">
-                2022
-              </p>
-            </div>
-          </div>
-          <div class="flex gap-0.5">
-            <div
-              class="text-white"
-              data-icon="Star"
-              data-size="20px"
-              data-weight="fill"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
-                ></path>
-              </svg>
-            </div>
-            <div
-              class="text-white"
-              data-icon="Star"
-              data-size="20px"
-              data-weight="fill"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
-                ></path>
-              </svg>
-            </div>
-            <div
-              class="text-white"
-              data-icon="Star"
-              data-size="20px"
-              data-weight="fill"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
-                ></path>
-              </svg>
-            </div>
-            <div
-              class="text-white"
-              data-icon="Star"
-              data-size="20px"
-              data-weight="fill"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
-                ></path>
-              </svg>
-            </div>
-            <div
-              class="text-white"
-              data-icon="Star"
-              data-size="20px"
-              data-weight="fill"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <p class="text-white text-base font-normal leading-normal">
-            Working with Ethan was a pleasure. His ability to translate complex
-            ideas into intuitive designs is truly remarkable. Highly recommend!
-          </p>
-          <div class="flex gap-9 text-[#9cabba]">
-            <button class="flex items-center gap-2">
-              <div
-                class="text-inherit"
-                data-icon="ThumbsUp"
-                data-size="20px"
-                data-weight="regular"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20px"
-                  height="20px"
-                  fill="currentColor"
-                  viewBox="0 0 256 256"
-                >
-                  <path
-                    d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"
-                  ></path>
-                </svg>
-              </div>
-              <p class="text-inherit">8</p>
-            </button>
-            <button class="flex items-center gap-2">
-              <div
-                class="text-inherit"
-                data-icon="ThumbsDown"
-                data-size="20px"
-                data-weight="regular"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20px"
-                  height="20px"
-                  fill="currentColor"
-                  viewBox="0 0 256 256"
-                >
-                  <path
-                    d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"
-                  ></path>
-                </svg>
-              </div>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { ref, reactive } from "vue";
 import { useStore } from "@/store";
 
 const store = useStore();
@@ -524,41 +373,47 @@ const skills = reactive([
   "SketchUp Expert",
 ]);
 
-const loading = ref(false);
+const awards = reactive([
+  { title: "Best Creative Agency", year: "2023" },
+  { title: "Top 3D Design Studio", year: "2022" },
+  { title: "Innovation in Digital Art", year: "2021" },
+]);
+
+const testimonials = reactive([
+  {
+    client: "Jane Smith",
+    location: "CEO of FutureTech",
+    feedback:
+      "Space UI transformed our vision into stunning visuals that exceeded expectations.",
+  },
+  {
+    client: "John Doe",
+    location: "Creative Director at Visionary Designs",
+    feedback:
+      "Their team brought innovation and creativity that elevated our project to new heights.",
+  },
+  {
+    client: "Sarah Lee",
+    location: "Marketing Manager at InnovateX",
+    feedback:
+      "Working with Space UI was a seamless experience. Their designs truly speak for themselves.",
+  },
+]);
+
+let loading = ref(false);
 
 async function toggleFollow() {
   if (loading.value) return; // prevent spamming
-
   loading.value = true;
+
   try {
     if (store.user.isFollowing) {
-      await unfollow();
+      await store.unfollow();
     } else {
-      await follow();
+      await store.follow();
     }
   } catch (err) {
     console.error("Failed:", err);
-  } finally {
-    loading.value = false;
-  }
-}
-
-async function follow() {
-  let uid = store.user.uid;
-
-  if (uid) {
-    await store.follow(uid);
-  } else {
-    await store.signin();
-    await store.follow(uid);
-  }
-  console.info("Followed");
-}
-
-async function unfollow() {
-  let uid = store.user.uid;
-  if (uid) {
-    await store.unfollow(uid);
   }
 }
 </script>

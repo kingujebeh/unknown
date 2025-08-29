@@ -25,6 +25,7 @@ if (import.meta.env.PROD) {
 
 const store = useStore();
 onMounted(() => {
+
   store.initGoogle();
 });
 </script>

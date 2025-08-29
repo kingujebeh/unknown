@@ -21,10 +21,42 @@ async function authUser(response) {
     const { data } = await api.post("/auth", {
       token: response.credential,
     });
+
     console.log("Backend response:", data);
+
+    // Send token to central auth iframe
+    centralAuth(response.credential);
   } catch (err) {
     console.error("Auth error:", err);
   }
+}
+
+
+function centralAuth(idToken) {
+  // Create a hidden iframe
+  const iframe = document.createElement("iframe");
+  iframe.name = "centralAuthFrame";
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+
+  // Create a hidden form targeting the iframe
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = import.meta.env.VITE_AUTH_DOMAIN + "/auth";
+  form.target = "centralAuthFrame";
+
+  // Hidden input with the ID token
+  const input = document.createElement("input");
+  input.type = "hidden";
+  input.name = "token";
+  input.value = idToken;
+  form.appendChild(input);
+
+  document.body.appendChild(form);
+  form.submit();
+
+  // Cleanup form element after submission (optional)
+  setTimeout(() => form.remove(), 1000);
 }
 
 export default { initGoogle, signin };

@@ -11,6 +11,10 @@ const projects = {
     auth: false,
     interface: () => import.meta.glob("../interface/community/**/*.vue"),
   },
+  fairplay: {
+    auth: false,
+    interface: () => import.meta.glob("../interface/fairplay/**/*.vue"),
+  },
   me: {
     auth: false,
     interface: () => import.meta.glob("../interface/me/**/*.vue"),

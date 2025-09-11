@@ -3,8 +3,9 @@ import { createAuthRoutes } from "./auth";
 
 async function loadRoutes(project) {
   project = project || import.meta.env.VITE_PROJECT;
-  const software = getProjects(project)
-  if (!software) throw new Error(`No software found for VITE_PROJECT=${project}`);
+  const software = getProjects(project);
+  if (!software)
+    throw new Error(`No software found for VITE_PROJECT=${project}`);
 
   const pages = software.interface();
   const children = Object.keys(pages).map((filePath) => {
@@ -13,9 +14,26 @@ async function loadRoutes(project) {
     return { path, name, component: pages[filePath] };
   });
 
+  // if Home.vue exists, add a redirect from / to /home
+  if (Object.keys(pages).some((filePath) => filePath.endsWith("Home.vue"))) {
+    children.unshift({
+      path: "/",
+      redirect: "/home",
+    });
+  }
+
   const routes = [
-    { path: "/", name: "screen", component: () => import("@/layouts/Screen.vue"), children },
-    { path: "/:pathMatch(.*)*", name: "404", component: () => import("@/pages/Error/404.vue") },
+    {
+      path: "/",
+      name: "screen",
+      component: () => import("@/layouts/Screen.vue"),
+      children,
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: () => import("@/pages/Error/404.vue"),
+    },
   ];
 
   if (software.auth) {

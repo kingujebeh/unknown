@@ -9,55 +9,22 @@ async function loadRoutes(project) {
 
   const pages = software.interface();
 
-  const groups = {};
-  Object.keys(pages).forEach((filePath) => {
+  const children = Object.keys(pages).map((filePath) => {
     const segments = filePath.split("/");
     const fileName = segments.pop();
-    let folder = segments.pop() || ""; // parent folder
     const name = fileName.replace(".vue", "").toLowerCase();
 
-    // special case: put Home.vue & Index.vue directly at root
-    if (["home", "index"].includes(name)) {
-      folder = "";
-    }
-
-    const path =
-      name === "index"
-        ? ""
-        : name === "splash"
-        ? ""
-        : name;
-
-    if (!groups[folder]) groups[folder] = [];
-    groups[folder].push({
-      path: path || "/", // folder root or filename
-      name: `${folder ? folder + "-" : ""}${name}`,
+    return {
+      path: name === "index" ? "" : name,
+      name,
       component: pages[filePath],
-    });
+    };
   });
 
-  let children = [];
-
-  // root pages
-  if (groups[""]) {
-    children.push(...groups[""]);
-  }
-
-  // every other folder becomes a nested route
-  Object.keys(groups).forEach((folder) => {
-    if (folder === "") return;
-    children.push({
-      path: folder.toLowerCase(),
-      name: folder.toLowerCase(),
-      children: groups[folder].map((r) => ({
-        ...r,
-        path: r.path.replace(/^\//, ""),
-      })),
-    });
-  });
-
-  // redirect / -> /home if Home.vue exists
-  if (Object.keys(pages).some((f) => f.endsWith("Home.vue"))) {
+  // redirect priority: Splash → Home → Index
+  if (Object.keys(pages).some((f) => f.endsWith("Splash.vue"))) {
+    children.unshift({ path: "/", redirect: "/splash" });
+  } else if (Object.keys(pages).some((f) => f.endsWith("Home.vue"))) {
     children.unshift({ path: "/", redirect: "/home" });
   } else if (Object.keys(pages).some((f) => f.endsWith("Index.vue"))) {
     children.unshift({ path: "/", redirect: "/" });

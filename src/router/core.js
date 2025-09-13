@@ -8,55 +8,59 @@ async function loadRoutes(project) {
     throw new Error(`No software found for VITE_PROJECT=${project}`);
 
   const pages = software.interface();
-  console.log("Pages loaded:", Object.keys(pages));
 
-  // Group pages by directory (auth, etc.)
   const groups = {};
-
   Object.keys(pages).forEach((filePath) => {
     const segments = filePath.split("/");
     const fileName = segments.pop();
-    const folder = segments.pop() || ""; // e.g. "auth" or "" if root
+    let folder = segments.pop() || ""; // parent folder
     const name = fileName.replace(".vue", "").toLowerCase();
 
-    // Path inside the folder
+    // special case: put Home.vue & Index.vue directly at root
+    if (["home", "index"].includes(name)) {
+      folder = "";
+    }
+
     const path =
-      name === "index" ? "" : name === "splash" ? "" : `/${name.toLowerCase()}`;
+      name === "index"
+        ? ""
+        : name === "splash"
+        ? ""
+        : name;
 
     if (!groups[folder]) groups[folder] = [];
     groups[folder].push({
-      path: path || "/", // root of folder
-      name,
+      path: path || "/", // folder root or filename
+      name: `${folder ? folder + "-" : ""}${name}`,
       component: pages[filePath],
     });
   });
 
-  // Build children routes
   let children = [];
 
-  // root pages (folder = "")
+  // root pages
   if (groups[""]) {
     children.push(...groups[""]);
   }
 
-  // auth folder pages nested under /auth
-  if (groups["auth"]) {
+  // every other folder becomes a nested route
+  Object.keys(groups).forEach((folder) => {
+    if (folder === "") return;
     children.push({
-      path: "/auth",
-      name: "auth",
-      children: groups["auth"].map((r) => ({
+      path: folder.toLowerCase(),
+      name: folder.toLowerCase(),
+      children: groups[folder].map((r) => ({
         ...r,
-        path: r.path.replace(/^\//, ""), // remove leading slash for child paths
+        path: r.path.replace(/^\//, ""),
       })),
     });
-  }
+  });
 
-  // if Home.vue exists, add redirect from / to /home
-  if (Object.keys(pages).some((filePath) => filePath.endsWith("Home.vue"))) {
-    children.unshift({
-      path: "/",
-      redirect: "/home",
-    });
+  // redirect / -> /home if Home.vue exists
+  if (Object.keys(pages).some((f) => f.endsWith("Home.vue"))) {
+    children.unshift({ path: "/", redirect: "/home" });
+  } else if (Object.keys(pages).some((f) => f.endsWith("Index.vue"))) {
+    children.unshift({ path: "/", redirect: "/" });
   }
 
   const routes = [
@@ -79,7 +83,6 @@ async function loadRoutes(project) {
   }
 
   console.log(JSON.stringify(routes, null, 2));
-
   return routes;
 }
 

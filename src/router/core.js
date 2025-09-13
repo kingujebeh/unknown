@@ -8,13 +8,50 @@ async function loadRoutes(project) {
     throw new Error(`No software found for VITE_PROJECT=${project}`);
 
   const pages = software.interface();
-  const children = Object.keys(pages).map((filePath) => {
-    const name = filePath.split("/").pop().replace(".vue", "").toLowerCase();
-    const path = name === "index" ? "/" : name === "splash" ? "" : `/${name}`;
-    return { path, name, component: pages[filePath] };
+  console.log("Pages loaded:", Object.keys(pages));
+
+  // Group pages by directory (auth, etc.)
+  const groups = {};
+
+  Object.keys(pages).forEach((filePath) => {
+    const segments = filePath.split("/");
+    const fileName = segments.pop();
+    const folder = segments.pop() || ""; // e.g. "auth" or "" if root
+    const name = fileName.replace(".vue", "").toLowerCase();
+
+    // Path inside the folder
+    const path =
+      name === "index" ? "" : name === "splash" ? "" : `/${name.toLowerCase()}`;
+
+    if (!groups[folder]) groups[folder] = [];
+    groups[folder].push({
+      path: path || "/", // root of folder
+      name,
+      component: pages[filePath],
+    });
   });
 
-  // if Home.vue exists, add a redirect from / to /home
+  // Build children routes
+  let children = [];
+
+  // root pages (folder = "")
+  if (groups[""]) {
+    children.push(...groups[""]);
+  }
+
+  // auth folder pages nested under /auth
+  if (groups["auth"]) {
+    children.push({
+      path: "/auth",
+      name: "auth",
+      children: groups["auth"].map((r) => ({
+        ...r,
+        path: r.path.replace(/^\//, ""), // remove leading slash for child paths
+      })),
+    });
+  }
+
+  // if Home.vue exists, add redirect from / to /home
   if (Object.keys(pages).some((filePath) => filePath.endsWith("Home.vue"))) {
     children.unshift({
       path: "/",
@@ -40,6 +77,8 @@ async function loadRoutes(project) {
     const authRoutes = await createAuthRoutes(project);
     if (authRoutes) routes.splice(1, 0, authRoutes);
   }
+
+  console.log(JSON.stringify(routes, null, 2));
 
   return routes;
 }

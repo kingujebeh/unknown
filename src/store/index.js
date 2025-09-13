@@ -20,14 +20,15 @@ export const useStore = defineStore("unknown", () => {
   const user = reactive({
     uid: null,
     isFollowing: false,
+    isAuthenticated: false,
   });
 
   async function init() {
     console.info("App Initialized");
 
-    // Get & Set App Data
-    const data = await fn.getData();
-    Object.assign(info, data);
+    // // Get & Set App Data
+    // const data = await fn.getData();
+    // Object.assign(info, data);
   }
 
   return { init, software, info, user, ...core, ...auth };

@@ -10,7 +10,7 @@
     </div>
 
     <!-- Fixed Bottom Nav -->
-    <bottom-navigation ref="bottomNav" />
+    <!-- <bottom-navigation v-if="route.meta" ref="bottomNav" /> -->
   </div>
 </template>
 
@@ -18,7 +18,11 @@
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useStore } from "@/store";
 import BottomNavigation from "@/components/ui/Navigation/Bottom.vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
+
+console.log(route.meta);
 const store = useStore();
 const software = store.software.name;
 const fonts = store.software.fonts;

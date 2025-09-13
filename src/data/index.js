@@ -11,9 +11,21 @@ const projects = {
     auth: false,
     interface: () => import.meta.glob("../interface/community/**/*.vue"),
   },
-  fairplay: {
+  fairpay: {
     auth: false,
-    interface: () => import.meta.glob("../interface/fairplay/**/*.vue"),
+    interface: () => import.meta.glob("../interface/fairpay/**/*.vue"),
+    router: {
+      beforeEach: (to, from, next, store) => {
+        next();
+        // const isLoggedIn = store.user.isAuthenticated;
+        // if (to.meta.requiresAuth && !isLoggedIn) {
+        //   // user not logged in, redirect to login
+        //   next({ name: "Login", query: { redirect: to.fullPath } });
+        // } else {
+        //   next();
+        // }
+      },
+    },
   },
   me: {
     auth: false,

@@ -9,7 +9,7 @@ export function syncSharedFiles(software, rootDir) {
   const softwarePath = path.join(rootDir, software);
   const srcPath = path.join(softwarePath, "src");
 
-  // Shared folders
+  // Shared folders (recursive copy for each)
   const foldersToCopy = [
     "api",
     "assets",
@@ -22,22 +22,19 @@ export function syncSharedFiles(software, rootDir) {
     "service",
     "store",
   ];
-  foldersToCopy.forEach((folder) =>
-    copyFolder(path.join("./src", folder), path.join(srcPath, folder))
-  );
 
-  // Interface files only to their software
+  foldersToCopy.forEach((folder) => {
+    const source = path.join("./src", folder);
+    const target = path.join(srcPath, folder);
+    if (fs.existsSync(source)) {
+      copyFolder(source, target); // recursive copy
+    }
+  });
+
+  // Interface files/folders (recursive copy for each software)
   const softwareInterfacePath = path.join("./src/interface", software);
   if (fs.existsSync(softwareInterfacePath)) {
     const targetInterfacePath = path.join(srcPath, "interface", software);
-    createDir(targetInterfacePath);
-    fs.readdirSync(softwareInterfacePath).forEach((file) => {
-      if (file.endsWith(".vue")) {
-        fs.copyFileSync(
-          path.join(softwareInterfacePath, file),
-          path.join(targetInterfacePath, file)
-        );
-      }
-    });
+    copyFolder(softwareInterfacePath, targetInterfacePath); // recursive copy
   }
 }

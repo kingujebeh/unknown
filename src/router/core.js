@@ -1,76 +1,49 @@
 import { getProjects } from "@/data";
-import { createAuthRoutes } from "./auth";
 
-// Convert "home" -> "Home", "onboardone" -> "OnBoardOne"
-function toPascalCase(str) {
+// Convert "Home" -> "home", "OnBoardOne" -> "on-board-one"
+function toKebabCase(str) {
   return str
-    .replace(/[-_](.)/g, (_, c) => c.toUpperCase())
-    .replace(/^\w/, (c) => c.toUpperCase());
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2") // split camel/pascal
+    .replace(/[_\s]+/g, "-")               // replace underscores/spaces
+    .toLowerCase();
 }
 
-// Find the base folder where the first .vue file is located
-function findBaseFolder(pages) {
-  const paths = Object.keys(pages);
-  let base = null;
-
-  paths.forEach((filePath) => {
-    const segments = filePath.split("/");
-    const vueIndex = segments.findIndex((s) => s.endsWith(".vue"));
-    if (vueIndex > 0) {
-      const candidate = segments[vueIndex - 1]; // folder before .vue file
-      if (!base || candidate.length < base.length) {
-        base = candidate;
-      }
-    }
-  });
-
-  return base;
-}
-
-// Normalize path segments by removing everything before the base folder
-// and dropping the first folder (so top-level folders like "pro" don't appear)
-function normalizePathSegments(filePath, baseFolder) {
+// Normalize path segments by removing the first 3 folders
+// (so "pro/interface/fairpay/..." → becomes "auth/...") 
+function normalizePathSegments(filePath) {
   const segments = filePath.split("/");
-  const baseIndex = segments.indexOf(baseFolder);
-
-  // Get path parts starting from base folder
-  let sliced = segments.slice(baseIndex);
-
-  // Drop the first folder after base
-  if (sliced.length > 1) {
-    sliced = sliced.slice(1);
-  }
-
-  return sliced;
+  return segments.slice(3); // drop "pro/interface/fairpay"
 }
 
-function addToTree(tree, filePath, component, baseFolder) {
-  const segments = normalizePathSegments(filePath, baseFolder);
-  const fileName = segments.pop();
-  const name = toPascalCase(fileName.replace(".vue", ""));
-  const path =
-    name.toLowerCase() === "index"
-      ? ""
-      : fileName.replace(".vue", "").toLowerCase();
+function addToTree(tree, filePath, component) {
+  const segments = normalizePathSegments(filePath);
+  if (!segments || segments.length === 0) return;
+
+  const fileName = segments.pop(); // actual .vue file
+  const name = toKebabCase(fileName.replace(".vue", ""));
+  const pagePath = name === "index" ? "" : name;
 
   let current = tree;
-  for (const segment of segments) {
-    const segName = segment.toLowerCase();
-    let child = current.find((c) => c.path === segName);
+
+  // Walk through folder segments → build nested nodes
+  for (let i = 0; i < segments.length; i++) {
+    const seg = toKebabCase(segments[i]);
+
+    let child = current.find((c) => c.path === seg && Array.isArray(c.children));
     if (!child) {
       child = {
-        path: segName,
-        name: toPascalCase(segment),
+        path: seg,
+        name: seg,
         children: [],
       };
       current.push(child);
     }
-    if (!child.children) child.children = [];
     current = child.children;
   }
 
+  // Add the actual page node
   current.push({
-    path,
+    path: pagePath,
     name,
     component,
   });
@@ -84,13 +57,9 @@ async function loadRoutes(project) {
 
   const pages = software.interface();
 
-  // Find base folder
-  const baseFolder = findBaseFolder(pages);
-
-  // Build nested children
   const children = [];
   Object.keys(pages).forEach((filePath) => {
-    addToTree(children, filePath, pages[filePath], baseFolder);
+    addToTree(children, filePath, pages[filePath]);
   });
 
   // Redirect priority: Splash → Home → Index
@@ -115,11 +84,6 @@ async function loadRoutes(project) {
       component: () => import("@/pages/Error/404.vue"),
     },
   ];
-
-  if (software.auth) {
-    const authRoutes = await createAuthRoutes(project);
-    if (authRoutes) routes.splice(1, 0, authRoutes);
-  }
 
   console.log(JSON.stringify(routes, null, 2));
   return routes;

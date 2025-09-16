@@ -23,12 +23,12 @@ function loadGoogleScript(callback) {
   document.body.appendChild(script);
 }
 
-// Initialize Google OAuth2 client
+// Initialize Google OAuth2 Code Client (supports requestCode)
 function initGoogle() {
   codeClient = window.google.accounts.oauth2.initCodeClient({
     client_id: import.meta.env.VITE_GOOGLE_IDENTITY_CLIENT_ID,
     scope: "openid email profile",
-    ux_mode: "popup", // force popup on desktop + mobile
+    ux_mode: "popup", // force popup on mobile + desktop
     callback: async (response) => {
       if (response.code) {
         await exchangeCodeForToken(response.code);
@@ -37,11 +37,11 @@ function initGoogle() {
   });
 }
 
-// Trigger sign-in flow
+// Trigger sign-in with popup (works on mobile too)
 function signin() {
   loadGoogleScript(() => {
     if (!codeClient) initGoogle();
-    codeClient.requestCode(); // opens Google popup
+    codeClient.requestCode(); // ✅ available here
   });
 }
 

@@ -1,50 +1,75 @@
 // auth.js
 import api from "@/api";
 
+let codeClient;
+let scriptLoaded = false;
+
+// Load Google script dynamically
+function loadGoogleScript(callback) {
+  if (scriptLoaded) {
+    callback();
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = "https://accounts.google.com/gsi/client";
+  script.async = true;
+  script.defer = true;
+  script.onload = () => {
+    scriptLoaded = true;
+    callback();
+  };
+
+  document.body.appendChild(script);
+}
+
+// Initialize Google OAuth2 client
 function initGoogle() {
-  window.google.accounts.id.initialize({
+  codeClient = window.google.accounts.oauth2.initCodeClient({
     client_id: import.meta.env.VITE_GOOGLE_IDENTITY_CLIENT_ID,
-    callback: authUser,
-    ux_mode: "popup",
+    scope: "openid email profile",
+    ux_mode: "popup", // force popup on desktop + mobile
+    callback: async (response) => {
+      if (response.code) {
+        await exchangeCodeForToken(response.code);
+      }
+    },
   });
 }
 
+// Trigger sign-in flow
 function signin() {
-  // Don’t call prompt here — let button click open Google flow
-  window.google.accounts.id.prompt(); // ❌ Not needed for button flow
+  loadGoogleScript(() => {
+    if (!codeClient) initGoogle();
+    codeClient.requestCode(); // opens Google popup
+  });
 }
 
-async function authUser(response) {
-  console.log("Google ID Token:", response.credential);
-
+// Exchange auth code for tokens with your backend
+async function exchangeCodeForToken(code) {
   try {
-    const { data } = await api.post("/auth", {
-      token: response.credential,
-    });
-
+    const { data } = await api.post("/auth", { code });
     console.log("Backend response:", data);
 
-    // Send token to central auth iframe
-    centralAuth(response.credential);
+    if (data.idToken) {
+      centralAuth(data.idToken);
+    }
   } catch (err) {
     console.error("Auth error:", err);
   }
 }
 
 function centralAuth(idToken) {
-  // Create a hidden iframe
   const iframe = document.createElement("iframe");
   iframe.name = "centralAuthFrame";
   iframe.style.display = "none";
   document.body.appendChild(iframe);
 
-  // Create a hidden form targeting the iframe
   const form = document.createElement("form");
   form.method = "POST";
   form.action = import.meta.env.VITE_AUTH_DOMAIN + "/auth";
   form.target = "centralAuthFrame";
 
-  // Hidden input with the ID token
   const input = document.createElement("input");
   input.type = "hidden";
   input.name = "token";
@@ -54,8 +79,7 @@ function centralAuth(idToken) {
   document.body.appendChild(form);
   form.submit();
 
-  // Cleanup form element after submission (optional)
   setTimeout(() => form.remove(), 1000);
 }
 
-export default { initGoogle, signin };
+export default { signin };

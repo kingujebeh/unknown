@@ -4,39 +4,7 @@
   >
     <!-- Header -->
     <div class="flex items-center justify-between px-4 pt-6">
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-5 h-5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-      </button>
-
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-5 h-5"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h6" />
-        </svg>
-      </button>
+      <back class="w-8 h-8"></back>
     </div>
 
     <!-- Split Card -->
@@ -113,16 +81,23 @@
 
       <div class="flex gap-3 mt-6">
         <button
-          class="flex-1 py-3 rounded-full bg-gray-100 text-gray-700 font-medium"
+          class="flex items-center justify-center gap-3 flex-1 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-900 transition"
+          @click="store.signin"
         >
-          Log in
-        </button>
-        <button
-          class="flex-1 py-3 rounded-full bg-black text-white font-medium"
-        >
-          Create account
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google"
+            class="w-5 h-5 bg-white rounded-full p-0.5"
+          />
+          <span>Sign in with Google</span>
         </button>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { useStore } from "@/store";
+
+const store = useStore();
+</script>

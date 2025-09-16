@@ -1,39 +1,40 @@
 const projects = {
   kingdom: {
     auth: false,
-    interface: () => import.meta.glob("../interface/kingdom/**/*.vue"),
+    interface: () => import.meta.glob("../interface/kingdom/**/*"),
   },
   business: {
     auth: false,
-    interface: () => import.meta.glob("../interface/business/**/*.vue"),
+    interface: () => import.meta.glob("../interface/business/**/*"),
   },
   community: {
     auth: false,
-    interface: () => import.meta.glob("../interface/community/**/*.vue"),
+    interface: () => import.meta.glob("../interface/community/**/*"),
   },
   fairpay: {
-    auth: false,
-    interface: () => import.meta.glob("../interface/fairpay/**/*.vue"),
+    auth: true,
+    interface: () => import.meta.glob("../interface/fairpay/**/*"),
     router: {
       beforeEach: (to, from, next, store) => {
-        next();
-        // const isLoggedIn = store.user.isAuthenticated;
-        // if (to.meta.requiresAuth && !isLoggedIn) {
-        //   // user not logged in, redirect to login
-        //   next({ name: "Login", query: { redirect: to.fullPath } });
-        // } else {
-        //   next();
-        // }
+        const isLoggedIn = store.user.isAuthenticated;
+        console.log(to.meta.auth);
+        if (to.meta.auth && !isLoggedIn) {
+          // user not logged in, redirect to login
+          next({ name: "on-board-one", query: { redirect: to.fullPath } });
+        } else {
+          next();
+        }
+        console.log("You need to Log In");
       },
     },
   },
   me: {
     auth: false,
-    interface: () => import.meta.glob("../interface/me/**/*.vue"),
+    interface: () => import.meta.glob("../interface/me/**/*"),
   },
   store: {
     auth: false,
-    interface: () => import.meta.glob("../interface/store/**/*.vue"),
+    interface: () => import.meta.glob("../interface/store/**/*"),
     color: "#639155",
     bgColor: "#ffffff",
     showLabel: false,
@@ -83,7 +84,7 @@ const projects = {
   },
   shop: {
     auth: false,
-    interface: () => import.meta.glob("../interface/shop/**/*.vue"),
+    interface: () => import.meta.glob("../interface/shop/**/*"),
     color: "#111518",
     bgColor: "#ffffff",
     showLabel: true,
@@ -117,7 +118,7 @@ const projects = {
   },
   pro: {
     auth: true,
-    interface: () => import.meta.glob("../interface/pro/**/*.vue"),
+    interface: () => import.meta.glob("../interface/pro/**/*"),
     color: "#ffffff",
     bgColor: "#1b2127",
     fonts: `'Plus Jakarta Sans', 'Noto Sans', sans-serif`,

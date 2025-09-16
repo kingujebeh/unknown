@@ -9,15 +9,12 @@
       <router-view />
     </div>
 
-    <!-- Fixed Bottom Nav -->
-    <!-- <bottom-navigation v-if="route.meta" ref="bottomNav" /> -->
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useStore } from "@/store";
-import BottomNavigation from "@/components/ui/Navigation/Bottom.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();

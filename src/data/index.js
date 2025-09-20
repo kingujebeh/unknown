@@ -142,6 +142,41 @@ const projects = {
       },
     ],
   },
+  pro: {
+    auth: true,
+    interface: () => import.meta.glob("../interface/pro/**/*"),
+    color: "#ffffff",
+    bgColor: "#1b2127",
+    fonts: `'Plus Jakarta Sans', 'Noto Sans', sans-serif`,
+    showLabel: true,
+    tabs: [
+      {
+        name: "about",
+        label: "About",
+        icon: {
+          active: "material-symbols-light:person",
+          inactive: "material-symbols-light:person-outline",
+        },
+      },
+      {
+        name: "projects",
+        label: "Projects",
+        icon: {
+          active: "material-symbols:folder",
+          inactive: "material-symbols:folder-outline",
+        },
+      },
+    ],
+  },
+  handyman: {
+    auth: true,
+    interface: () => import.meta.glob("../interface/handyman/**/*"),
+  },
+  handyfix: {
+    auth: true,
+    interface: () => import.meta.glob("../interface/handyfix/**/*"),
+  },
+
 };
 
 function getProjects(name) {

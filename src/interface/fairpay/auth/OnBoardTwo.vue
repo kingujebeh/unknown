@@ -80,24 +80,12 @@
       </p>
 
       <div class="flex gap-3 mt-6">
-        <button
-          class="flex items-center justify-center gap-3 flex-1 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-900 transition"
-          @click="store.signin"
-        >
-          <img
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-            alt="Google"
-            class="w-5 h-5 bg-white rounded-full p-0.5"
-          />
-          <span>Sign in with Google</span>
-        </button>
+        <ContinueWithGoogle class="rounded-full bg-black text-white" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useStore } from "@/store";
-
-const store = useStore();
+import ContinueWithGoogle from "@/components/auth/ContinueWithGoogle.vue";
 </script>

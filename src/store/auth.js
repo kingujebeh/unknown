@@ -3,6 +3,7 @@ import api from "@/api";
 
 let codeClient;
 let scriptLoaded = false;
+let scriptElement = null; // keep reference to the script
 
 // Load Google script dynamically
 function loadGoogleScript(callback) {
@@ -11,16 +12,16 @@ function loadGoogleScript(callback) {
     return;
   }
 
-  const script = document.createElement("script");
-  script.src = "https://accounts.google.com/gsi/client";
-  script.async = true;
-  script.defer = true;
-  script.onload = () => {
+  scriptElement = document.createElement("script");
+  scriptElement.src = "https://accounts.google.com/gsi/client";
+  scriptElement.async = true;
+  scriptElement.defer = true;
+  scriptElement.onload = () => {
     scriptLoaded = true;
     callback();
   };
 
-  document.body.appendChild(script);
+  document.body.appendChild(scriptElement);
 }
 
 // Initialize Google OAuth2 Code Client (supports requestCode)
@@ -32,6 +33,7 @@ function initGoogle() {
     callback: async (response) => {
       if (response.code) {
         await exchangeCodeForToken(response.code);
+        cleanupGoogleScript(); // remove script after successful signin
       }
     },
   });
@@ -56,7 +58,20 @@ async function exchangeCodeForToken(code) {
     }
   } catch (err) {
     console.error("Auth error:", err);
+    cleanupGoogleScript(); // remove script even on error
   }
+}
+
+// Optional: clean up Google script and client instance
+function cleanupGoogleScript() {
+  if (scriptElement) {
+    document.body.removeChild(scriptElement);
+    scriptElement = null;
+  }
+  if (codeClient) {
+    codeClient = null;
+  }
+  scriptLoaded = false;
 }
 
 function centralAuth(idToken) {

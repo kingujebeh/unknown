@@ -80,7 +80,7 @@
       </p>
 
       <div class="flex gap-3 mt-6">
-        <ContinueWithGoogle class="rounded-full bg-black text-white" />
+        <ContinueWithGoogle class="rounded-full bg-black text-white hover:bg-gray-900" />
       </div>
     </div>
   </div>

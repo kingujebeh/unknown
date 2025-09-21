@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex items-center justify-center gap-3 flex-1 py-3 font-medium hover:bg-gray-900 transition"
+    class="flex items-center justify-center gap-3 flex-1 py-3 font-medium transition"
     @click="store.signin"
   >
     <img

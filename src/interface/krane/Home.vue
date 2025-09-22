@@ -11,22 +11,6 @@
             >
               Genesis Krane
             </h1>
-            <button
-              class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
-            >
-              <svg
-                class="text-gray-900 dark:text-white"
-                fill="currentColor"
-                height="24"
-                viewBox="0 0 256 256"
-                width="24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"
-                ></path>
-              </svg>
-            </button>
           </div>
           <div class="relative pb-4">
             <div
@@ -71,7 +55,7 @@
               <div>
                 <p class="font-semibold">Fair Pay</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  Advanced code editor for developers
+                  More Description
                 </p>
               </div>
             </a>
@@ -89,7 +73,7 @@
               <div>
                 <p class="font-semibold">Handy Fix</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  A full suite of design tools
+                  More Description
                 </p>
               </div>
             </a>
@@ -107,7 +91,7 @@
               <div>
                 <p class="font-semibold">Handy Man</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  Connect and share with friends
+                  More Description
                 </p>
               </div>
             </a>
@@ -162,63 +146,5 @@
         </div>
       </main>
     </div>
-    <nav
-      class="border-t border-gray-200 dark:border-gray-800 bg-background-light dark:bg-background-dark"
-    >
-      <div class="container mx-auto px-4 py-2 flex justify-around">
-        <a
-          class="flex flex-col items-center justify-center space-y-1 text-primary"
-          href="#"
-        >
-          <svg
-            fill="currentColor"
-            height="24"
-            viewBox="0 0 256 256"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"
-            ></path>
-          </svg>
-          <span class="text-xs font-medium">Home</span>
-        </a>
-        <a
-          class="flex flex-col items-center justify-center space-y-1 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
-          href="#"
-        >
-          <svg
-            fill="currentColor"
-            height="24"
-            viewBox="0 0 256 256"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM80,84A12,12,0,1,1,68,72,12,12,0,0,1,80,84Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,120,84Z"
-            ></path>
-          </svg>
-          <span class="text-xs font-medium">Apps</span>
-        </a>
-        <a
-          class="flex flex-col items-center justify-center space-y-1 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
-          href="#"
-        >
-          <svg
-            fill="currentColor"
-            height="24"
-            viewBox="0 0 256 256"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"
-            ></path>
-          </svg>
-          <span class="text-xs font-medium">Profile</span>
-        </a>
-      </div>
-      <div class="pb-safe-area-bottom"></div>
-    </nav>
   </div>
 </template>

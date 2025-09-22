@@ -57,12 +57,18 @@
               >125 reviews</a
             >
           </div>
-          <button
-            class="flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-base font-bold text-white"
+          <a
+            :href="'https://' + name + '.gkrane.online'"
+            target="_blank"
+            rel="noopener"
           >
-            <span class="material-symbols-outlined">open_in_new</span>
-            <span class="truncate">Open Domain</span>
-          </button>
+            <button
+              class="flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-base font-bold text-white"
+            >
+              <span class="material-symbols-outlined">open_in_new</span>
+              <span class="truncate">Open Domain {{ name }}</span>
+            </button>
+          </a>
         </div>
         <p class="px-4 pb-4 text-base text-zinc-600 dark:text-zinc-400">
           A comprehensive suite of tools designed to boost your productivity,
@@ -256,7 +262,11 @@
 <script setup>
 import { useRoute } from "vue-router";
 
+defineProps({
+  name: String,
+});
+
 const route = useRoute();
 
-console.log(route.params);
+console.log(name, "ccc");
 </script>

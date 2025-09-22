@@ -6,9 +6,10 @@ const routes = [
     component: () => import("@/interface/krane/Home.vue"),
   },
   {
-    path: "/app/:app",
+    path: "/app/:name",
     name: "app",
     component: () => import("@/interface/krane/App.vue"),
+    props: true 
   },
 ];
 

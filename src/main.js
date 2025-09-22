@@ -38,18 +38,5 @@ if (import.meta.env.PROD) {
   }
 }
 
-console.log(import.meta.env.VITE_PROJECT);
-console.log(import.meta.env.VITE_AUTH_DOMAIN);
-
-// Load Google script dynamically if not in index.html
-
-if (!window.google) {
-  const script = document.createElement("script");
-  script.src = "https://accounts.google.com/gsi/client";
-  script.async = true;
-  script.defer = true;
-  document.head.appendChild(script);
-}
-
 app.use(router);
 app.mount("#app");

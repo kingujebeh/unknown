@@ -57,8 +57,10 @@
         <section class="mt-6">
           <h2 class="text-xl font-bold mb-4">Recommended For You</h2>
           <div class="grid grid-cols-1 gap-4">
-            <router-link
-              :to="{ name: 'app', params: { app: 'fairpay' } }"
+            <a
+              :href="'https://fairpay.gkrane.online'"
+              target="_blank"
+              rel="noopener"
               class="flex items-center space-x-4 p-4 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
             >
               <div
@@ -72,9 +74,11 @@
                   Advanced code editor for developers
                 </p>
               </div>
-            </router-link>
-            <router-link
-              :to="{ name: 'app', params: { app: 'handyfix' } }"
+            </a>
+            <a
+              :href="'https://handyfix.gkrane.online'"
+              target="_blank"
+              rel="noopener"
               class="flex items-center space-x-4 p-4 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
             >
               <div
@@ -88,9 +92,11 @@
                   A full suite of design tools
                 </p>
               </div>
-            </router-link>
-            <router-link
-              :to="{ name: 'app', params: { app: 'handyman' } }"
+            </a>
+            <a
+              :href="'https://handyman.gkrane.online'"
+              target="_blank"
+              rel="noopener"
               class="flex items-center space-x-4 p-4 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
             >
               <div
@@ -104,7 +110,7 @@
                   Connect and share with friends
                 </p>
               </div>
-            </router-link>
+            </a>
           </div>
         </section>
         <h2 class="text-xl font-bold mt-6 mb-4">Categories</h2>

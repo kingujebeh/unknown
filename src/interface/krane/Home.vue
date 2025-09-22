@@ -14,7 +14,7 @@
           </div>
           <div class="relative pb-4">
             <div
-              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              class="absolute h-12 inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
             >
               <svg
                 class="text-gray-400 dark:text-gray-500"
@@ -39,7 +39,7 @@
       </header>
       <main class="container mx-auto px-4 pb-4">
         <section class="mt-6">
-          <h2 class="text-xl font-bold mb-4">Recommended For You</h2>
+          <h2 class="text-xl font-bold mb-4">Available Apps</h2>
           <div class="grid grid-cols-1 gap-4">
             <a
               :href="'https://fairpay.gkrane.online'"

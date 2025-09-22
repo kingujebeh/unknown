@@ -1,7 +1,6 @@
 const router = {
   beforeEach: (to, from, next, store) => {
     const isLoggedIn = store.user.isAuthenticated;
-    console.log(to.meta.auth);
     if (to.meta.auth && !isLoggedIn) {
       // user not logged in, redirect to login
       next({ name: "on-board-one", query: { redirect: to.fullPath } });
@@ -19,18 +18,20 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: () => import("@/interface/handyman/Home.vue"),
+    component: () => import("@/interface/Home.vue"),
   },
   {
     path: "/auth",
     children: [
       {
-        path: "/on-board-one",
-        component: () => import("@/interface/handyman/auth/OnBoardOne.vue"),
+        path: "on-board-one",
+        name: "on-board-one",
+        component: () => import("@/interface/auth/OnBoardOne.vue"),
       },
       {
-        path: "/on-board-two",
-        component: () => import("@/interface/handyman/auth/OnBoardTwo.vue"),
+        path: "on-board-two",
+        name: "on-board-two",
+        component: () => import("@/interface/auth/OnBoardTwo.vue"),
       },
     ],
   },

@@ -20,7 +20,7 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: () => import("@/interface/fairpay/Home.vue"),
+    component: () => import("@/interface/Home.vue"),
     meta: { auth: true },
   },
   {
@@ -29,12 +29,12 @@ const routes = [
       {
         path: "on-board-one",
         name: "on-board-one",
-        component: () => import("@/interface/fairpay/auth/OnBoardOne.vue"),
+        component: () => import("@/interface/auth/OnBoardOne.vue"),
       },
       {
         path: "on-board-two",
         name: "on-board-two",
-        component: () => import("@/interface/fairpay/auth/OnBoardTwo.vue"),
+        component: () => import("@/interface/auth/OnBoardTwo.vue"),
       },
     ],
   },

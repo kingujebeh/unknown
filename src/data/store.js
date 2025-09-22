@@ -53,7 +53,7 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: () => import("@/interface/store/Home.vue"),
+    component: () => import("@/interface/Home.vue"),
   },
 ];
 

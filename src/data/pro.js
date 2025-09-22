@@ -28,15 +28,15 @@ const routes = [
   },
   {
     path: "/splash",
-    component: () => import("@/interface/pro/Splash.vue"),
+    component: () => import("@/interface/Splash.vue"),
   },
   {
     path: "/about",
-    component: () => import("@/interface/pro/About.vue"),
+    component: () => import("@/interface/About.vue"),
   },
   {
     path: "/projects",
-    component: () => import("@/interface/pro/Projects.vue"),
+    component: () => import("@/interface/Projects.vue"),
   },
 ];
 

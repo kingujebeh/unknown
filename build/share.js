@@ -14,7 +14,6 @@ export function syncSharedFiles(software, rootDir) {
     "api",
     "assets",
     "components",
-    // "data",
     "functions",
     "layouts",
     "pages",
@@ -31,6 +30,7 @@ export function syncSharedFiles(software, rootDir) {
     }
   });
 
+  // Data
   // Copy software-specific data file as index.js
   const dataFile = path.join("./src/data", `${software}.js`);
   const targetDataDir = path.join(srcPath, "data");
@@ -45,7 +45,7 @@ export function syncSharedFiles(software, rootDir) {
   // Interface files/folders (recursive copy for each software)
   const softwareInterfacePath = path.join("./src/interface", software);
   if (fs.existsSync(softwareInterfacePath)) {
-    const targetInterfacePath = path.join(srcPath, "interface", software);
+    const targetInterfacePath = path.join(srcPath, "interface");
     copyFolder(softwareInterfacePath, targetInterfacePath); // recursive copy
   }
 }

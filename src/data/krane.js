@@ -3,12 +3,12 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: () => import("@/interface/krane/Home.vue"),
+    component: () => import("@/interface/Home.vue"),
   },
   {
     path: "/app/:name",
     name: "app",
-    component: () => import("@/interface/krane/App.vue"),
+    component: () => import("@/interface/App.vue"),
     props: true 
   },
 ];

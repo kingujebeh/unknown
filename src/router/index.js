@@ -4,15 +4,13 @@ import { loadRoutes } from "./core";
 
 import { useStore } from "@/store";
 
-import { getProjects } from "@/data";
+import project from "@/data";
 
-const routes = await loadRoutes(import.meta.env.VITE_PROJECT);
+const routes = await loadRoutes();
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
-const project = getProjects(import.meta.env.VITE_PROJECT);
 
 // Wrap beforeEach
 if (project?.router?.beforeEach) {

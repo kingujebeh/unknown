@@ -4,7 +4,6 @@ import { reactive } from "vue";
 import fn from "@/functions";
 import core from "./core";
 import auth from "./auth";
-import { getProjects } from "@/data";
 
 const name = import.meta.env.VITE_PROJECT;
 
@@ -12,7 +11,7 @@ export const useStore = defineStore("unknown", () => {
   const software = reactive({
     name,
     info: {},
-    navigation: getProjects(name),
+    navigation: name,
   });
 
   const info = reactive({});

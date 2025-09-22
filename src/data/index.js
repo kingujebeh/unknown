@@ -1,181 +1,23 @@
+import community from "./community.js";
+import fairpay from "./fairpay.js";
+import krane from "./krane.js";
+import handyman from "./handyman.js";
+import handyfix from "./handyfix.js";
+import i from "./i.js";
+import pro from "./pro.js";
+import store from "./store.js";
+import shop from "./shop.js";
+
 const projects = {
-  kingdom: {
-    auth: false,
-    interface: () => import.meta.glob("../interface/kingdom/**/*"),
-  },
-  business: {
-    auth: false,
-    interface: () => import.meta.glob("../interface/business/**/*"),
-  },
-  community: {
-    auth: false,
-    interface: () => import.meta.glob("../interface/community/**/*"),
-  },
-  fairpay: {
-    auth: true,
-    interface: () => import.meta.glob("../interface/fairpay/**/*"),
-    router: {
-      beforeEach: (to, from, next, store) => {
-        const isLoggedIn = store.user.isAuthenticated;
-        console.log(to.meta.auth);
-        if (to.meta.auth && !isLoggedIn) {
-          // user not logged in, redirect to login
-          next({ name: "on-board-one", query: { redirect: to.fullPath } });
-        } else {
-          next();
-        }
-        console.log("You need to Log In");
-      },
-    },
-  },
-  me: {
-    auth: false,
-    interface: () => import.meta.glob("../interface/me/**/*"),
-  },
-  store: {
-    auth: false,
-    interface: () => import.meta.glob("../interface/store/**/*"),
-    color: "#639155",
-    bgColor: "#ffffff",
-    showLabel: false,
-    fonts: `'Space Grotesk', 'Noto Sans', sans-serif`,
-    tabs: [
-      {
-        name: "home",
-        label: "Home",
-        icon: {
-          active: "material-symbols-light:home",
-          inactive: "material-symbols-light:home-outline",
-        },
-      },
-      {
-        name: "shop",
-        label: "Shop",
-        icon: {
-          active: "material-symbols-light:shopping-bag",
-          inactive: "material-symbols-light:shopping-bag-outline",
-        },
-      },
-      {
-        name: "wishlist",
-        label: "Wishlist",
-        icon: {
-          active: "material-symbols-light:favorite",
-          inactive: "material-symbols-light:favorite-outline",
-        },
-      },
-      {
-        name: "cart",
-        label: "Cart",
-        icon: {
-          active: "material-symbols-light:shopping-cart",
-          inactive: "material-symbols-light:shopping-cart-outline",
-        },
-      },
-      {
-        name: "profile",
-        label: "Profile",
-        icon: {
-          active: "material-symbols-light:person",
-          inactive: "material-symbols-light:person-outline",
-        },
-      },
-    ],
-  },
-  shop: {
-    auth: false,
-    interface: () => import.meta.glob("../interface/shop/**/*"),
-    color: "#111518",
-    bgColor: "#ffffff",
-    showLabel: true,
-    fonts: `'Public Sans', 'Noto Sans', sans-serif`,
-    tabs: [
-      {
-        name: "home",
-        label: "Home",
-        icon: {
-          active: "material-symbols-light:home",
-          inactive: "material-symbols-light:home-outline",
-        },
-      },
-      {
-        name: "services",
-        label: "Services",
-        icon: {
-          active: "material-symbols-light:build",
-          inactive: "material-symbols-light:build-outline",
-        },
-      },
-      {
-        name: "profile",
-        label: "Profile",
-        icon: {
-          active: "material-symbols-light:person",
-          inactive: "material-symbols-light:person-outline",
-        },
-      },
-    ],
-  },
-  pro: {
-    auth: true,
-    interface: () => import.meta.glob("../interface/pro/**/*"),
-    color: "#ffffff",
-    bgColor: "#1b2127",
-    fonts: `'Plus Jakarta Sans', 'Noto Sans', sans-serif`,
-    showLabel: true,
-    tabs: [
-      {
-        name: "about",
-        label: "About",
-        icon: {
-          active: "material-symbols-light:person",
-          inactive: "material-symbols-light:person-outline",
-        },
-      },
-      {
-        name: "projects",
-        label: "Projects",
-        icon: {
-          active: "material-symbols:folder",
-          inactive: "material-symbols:folder-outline",
-        },
-      },
-    ],
-  },
-  handyman: {
-    auth: true,
-    interface: () => import.meta.glob("../interface/handyman/**/*"),
-    router: {
-      beforeEach: (to, from, next, store) => {
-        const isLoggedIn = store.user.isAuthenticated;
-        console.log(to.meta.auth);
-        if (to.meta.auth && !isLoggedIn) {
-          // user not logged in, redirect to login
-          next({ name: "on-board-one", query: { redirect: to.fullPath } });
-        } else {
-          next();
-        }
-        console.log("You need to Log In");
-      },
-    },
-  },
-  handyfix: {
-    auth: true,
-    interface: () => import.meta.glob("../interface/handyfix/**/*"),
-    router: {
-      beforeEach: (to, from, next, store) => {
-        const isLoggedIn = store.user.isAuthenticated;
-        console.log(to.meta.auth);
-        if (to.meta.auth && !isLoggedIn) {
-          // user not logged in, redirect to login
-          next({ name: "on-board-one", query: { redirect: to.fullPath } });
-        } else {
-          next();
-        }
-        console.log("You need to Log In");
-      },
-    },
-  },
+  fairpay,
+  krane,
+  pro,
+  store,
+  shop,
+  handyman,
+  handyfix,
+  i,
+  community,
 };
 
 function getProjects(name) {

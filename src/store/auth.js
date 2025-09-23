@@ -1,5 +1,5 @@
 // auth.js
-import api from "@/api";
+import api from "../api/index.js";
 
 let codeClient;
 let scriptLoaded = false;

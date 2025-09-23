@@ -1,11 +1,14 @@
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 
-import fn from "@/functions";
-import core from "./core";
-import auth from "./auth";
+import fn from "../functions/index.js";
+import core from "./core.js";
+import auth from "./auth.js";
 
-const name = import.meta.env.VITE_PROJECT;
+const name =
+  import.meta.env && import.meta.env.VITE_PROJECT
+    ? import.meta.env.VITE_PROJECT
+    : "krane";
 
 export const useStore = defineStore("unknown", () => {
   const software = reactive({

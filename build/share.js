@@ -25,27 +25,22 @@ export async function syncSharedFiles(software, rootDir) {
   foldersToCopy.forEach((folder) => {
     const source = path.join("./src", folder);
     const target = path.join(srcPath, folder);
-    if (fs.existsSync(source)) {
-      copyFolder(source, target); // recursive copy
-    }
+    if (fs.existsSync(source)) copyFolder(source, target);
   });
 
   // Data
   const dataFile = path.join("./src/data", `${software}.js`);
   const targetDataDir = path.join(srcPath, "data");
   if (fs.existsSync(dataFile)) {
-    if (!fs.existsSync(targetDataDir)) {
+    if (!fs.existsSync(targetDataDir))
       fs.mkdirSync(targetDataDir, { recursive: true });
-    }
-    const targetDataFile = path.join(targetDataDir, "index.js");
-    fs.copyFileSync(dataFile, targetDataFile);
+    fs.copyFileSync(dataFile, path.join(targetDataDir, "index.js"));
   }
 
-  // Interface files/folders (recursive copy for each software)
+  // Interface files/folders
   const softwareInterfacePath = path.join("./src/interface", software);
   if (fs.existsSync(softwareInterfacePath)) {
-    const targetInterfacePath = path.join(srcPath, "interface");
-    copyFolder(softwareInterfacePath, targetInterfacePath);
+    copyFolder(softwareInterfacePath, path.join(srcPath, "interface"));
   }
 
   /* ----------------------------
@@ -55,29 +50,56 @@ export async function syncSharedFiles(software, rootDir) {
   const routerIndexFile = path.resolve("./src/router/index.js");
 
   const targetRouterDir = path.join(srcPath, "router");
-  if (!fs.existsSync(targetRouterDir)) {
+  if (!fs.existsSync(targetRouterDir))
     fs.mkdirSync(targetRouterDir, { recursive: true });
-  }
 
   // Copy router/index.js
   if (fs.existsSync(routerIndexFile)) {
     fs.copyFileSync(routerIndexFile, path.join(targetRouterDir, "index.js"));
   }
 
+  // Copy & generate guards
+  const guardsFile = path.resolve("./src/router/guards/index.js");
+  if (fs.existsSync(guardsFile)) {
+    // Import the guards factory
+    const mod = await import(pathToFileURL(guardsFile));
+    const getGuards = mod.default;
+
+    if (typeof getGuards === "function") {
+      const { beforeEach, afterEach } = getGuards(software);
+
+      // Serialize functions to JS
+      const serializeFn = (fn) => fn.toString();
+
+      const guardFileContent = `// Auto-generated guards for ${software}
+import { useStore } from "@/store";
+      
+export const beforeEach = ${serializeFn(beforeEach)};
+export const afterEach = ${serializeFn(afterEach)};
+`;
+
+      fs.writeFileSync(
+        path.join(targetRouterDir, "guards.js"),
+        guardFileContent,
+        "utf-8"
+      );
+    } else {
+      console.warn("❌ guards.js default export is not a function");
+    }
+  }
+
+  // Generate routes.js as before
   if (fs.existsSync(routesFile)) {
     try {
       const mod = await import(pathToFileURL(routesFile));
       const getRoutes = mod.default;
-
-      if (typeof getRoutes !== "function") {
+      if (typeof getRoutes !== "function")
         throw new Error(
           "router/routes/index.js default export is not a function"
         );
-      }
 
       const routes = await getRoutes(software);
 
-      // Serializer: print valid JS instead of JSON
       const serialize = (obj, indent = 2) => {
         if (typeof obj === "string") return JSON.stringify(obj);
         if (typeof obj === "function") return obj.toString();
@@ -97,13 +119,12 @@ export async function syncSharedFiles(software, rootDir) {
         return String(obj);
       };
 
-      // ✅ Only output array, not wrapped again
       const fileContent = `export default ${serialize(routes)};\n`;
-
-      const routesJsPath = path.join(targetRouterDir, "routes.js");
-
-      // Overwrite once
-      fs.writeFileSync(routesJsPath, fileContent, "utf-8");
+      fs.writeFileSync(
+        path.join(targetRouterDir, "routes.js"),
+        fileContent,
+        "utf-8"
+      );
     } catch (err) {
       console.error("❌ Failed to generate routes:", err);
     }

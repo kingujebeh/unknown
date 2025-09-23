@@ -1,4 +1,4 @@
-import { useStore } from "@/store";
+import { useStore } from "./index.js";
 
 async function follow() {
   const store = useStore();

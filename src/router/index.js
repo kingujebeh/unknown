@@ -1,12 +1,11 @@
 // src/router/RouterFactory.js
 import { createRouter, createWebHistory } from "vue-router";
-import { loadRoutes } from "./core";
+import routes from "./routes.js";
 
 import { useStore } from "@/store";
 
 import project from "@/data";
 
-const routes = await loadRoutes();
 const router = createRouter({
   history: createWebHistory(),
   routes,
@@ -24,7 +23,8 @@ if (project?.router?.beforeEach) {
 if (project?.router?.afterEach) {
   router.afterEach((to, from) => {
     const store = useStore(); // ✅ safe here too
-    project.router.afterEach(to, from, store);
+    project.router.afterEach(to, from, next, store);
   });
 }
+
 export default router;

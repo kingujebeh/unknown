@@ -7,6 +7,8 @@
       ref="mainContent"
     >
       <router-view />
+      <!-- <bottom-navigation v-if="route.meta" ref="bottomNav" /> -->
+
     </div>
 
   </div>
@@ -14,6 +16,8 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
+import BottomNavigation from "@/components/ui/Navigation/Bottom.vue";
+
 import { useStore } from "@/store";
 import { useRoute } from "vue-router";
 

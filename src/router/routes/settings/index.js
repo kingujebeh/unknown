@@ -1,5 +1,5 @@
 let routes = [];
-const project = import.meta.env.VITE_PROJECT;
+let project;
 
 // ----------------------------
 // Route factory functions
@@ -37,8 +37,11 @@ routes = pages
   .filter((page) => page.projects.includes(project)) // only include for active project
   .map((page) => page.route()); // call the factory to get the route object
 
-const auth = {
-  path: "/auth",
-  children: routes,
-};
-export default auth;
+export default function auth(software) {
+  project = software;
+
+  return {
+    path: "/settings",
+    children: routes,
+  };
+}
